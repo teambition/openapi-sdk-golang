@@ -3,7 +3,7 @@
 ### 安装
 
 ```shell
-go get github.com/teambition/tb-oapi-go-sdk
+go get github.com/teambition/openapi-sdk-golang
 ```
 
 ## 如何使用
@@ -15,7 +15,7 @@ package main
 
 import (
 	"context"
-	openapiclient "github.com/teambition/tb-oapi-go-sdk"
+	openapiclient "github.com/teambition/openapi-sdk-golang"
 	"log"
 )
 

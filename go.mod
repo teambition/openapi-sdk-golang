@@ -1,4 +1,4 @@
-module github.com/teambition/tb-oapi-go-sdk
+module github.com/teambition/openapi-sdk-golang
 
 go 1.18
 

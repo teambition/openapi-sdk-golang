@@ -2353,6 +2353,20 @@ func (r ApiUpdateWorkTimeLimitRequest) Execute() (*UpdateWorkTimeLimitResponse, 
 /*
 UpdateWorkTimeLimit 更新工时企业人天的最大填报时间限制
 
+填报限制优先匹配 当前成员 那天有没有限制，否则会看 企业层面有没有限制，然后才是取24小时，
+
+如果少传了 userId 或者  date 不会做 更新当前成员人天限制，而是 更新了企业所有成员人天限制（企业层面的限制）。请慎重判断入参是否为空。
+
+例：
+
+1. 入参了 userId 、date、 maxTime， 效果：更新当前成员人天限制
+
+2. 只参了 userId 和 maxTime， 效果：更新企业所有成员人天限制，userId 是无效入参
+
+3. 只参了 date 和 maxTime， 效果：更新企业所有成员人天限制，date 是无效入参，不支持企业层面在某一天做限制
+
+4. 只参了 maxTime， 效果：更新企业所有成员人天限制
+
 
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().

@@ -9913,8 +9913,10 @@ type ApiQueryProjectsV3Request struct {
 	ctx context.Context
 	ApiService *ProjectAPIService
 	xTenantId *string
+	xOperatorId *string
 	projectIds *string
 	name *string
+	uniqueIdPrefix *string
 	pageSize *int32
 	pageToken *string
 	sourceId *string
@@ -9928,7 +9930,13 @@ func (r ApiQueryProjectsV3Request) XTenantId(xTenantId string) ApiQueryProjectsV
 	return r
 }
 
-// 项目ID集合，逗号分隔
+// 操作人ID
+func (r ApiQueryProjectsV3Request) XOperatorId(xOperatorId string) ApiQueryProjectsV3Request {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 项目ID集合，逗号分隔，例如: projectId1,projectId2,projectId3
 func (r ApiQueryProjectsV3Request) ProjectIds(projectIds string) ApiQueryProjectsV3Request {
 	r.projectIds = &projectIds
 	return r
@@ -9937,6 +9945,12 @@ func (r ApiQueryProjectsV3Request) ProjectIds(projectIds string) ApiQueryProject
 // 项目名字(模糊匹配)
 func (r ApiQueryProjectsV3Request) Name(name string) ApiQueryProjectsV3Request {
 	r.name = &name
+	return r
+}
+
+// 任务编号前缀(也叫做项目编号)
+func (r ApiQueryProjectsV3Request) UniqueIdPrefix(uniqueIdPrefix string) ApiQueryProjectsV3Request {
+	r.uniqueIdPrefix = &uniqueIdPrefix
 	return r
 }
 
@@ -10018,6 +10032,9 @@ func (a *ProjectAPIService) QueryProjectsV3Execute(r ApiQueryProjectsV3Request) 
 	if r.name != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "name", r.name, "")
 	}
+	if r.uniqueIdPrefix != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "uniqueIdPrefix", r.uniqueIdPrefix, "")
+	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
 	}
@@ -10052,6 +10069,9 @@ func (a *ProjectAPIService) QueryProjectsV3Execute(r ApiQueryProjectsV3Request) 
 	}
 	if r.xTenantId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Operator-Id", r.xOperatorId, "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

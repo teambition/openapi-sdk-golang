@@ -1085,13 +1085,21 @@ func (a *ProgramAPIService) DeleteProgramV3Execute(r ApiDeleteProgramV3Request) 
 type ApiGetProgramsV3Request struct {
 	ctx context.Context
 	ApiService *ProgramAPIService
+	xOperatorId *string
 	xTenantId *string
 	programIds *string
+	parentId *string
 	virtualProjectIds *string
 	q *string
 	orderBy *string
 	pageSize *int32
 	pageToken *string
+}
+
+// 查询人ID, 如果存在会检查该成员可见的任务
+func (r ApiGetProgramsV3Request) XOperatorId(xOperatorId string) ApiGetProgramsV3Request {
+	r.xOperatorId = &xOperatorId
+	return r
 }
 
 // 企业 ID
@@ -1100,9 +1108,15 @@ func (r ApiGetProgramsV3Request) XTenantId(xTenantId string) ApiGetProgramsV3Req
 	return r
 }
 
-// 项目集 ID 列表, 逗号分隔，最多50个
+// 项目集 ID 列表, 逗号分隔，最多50个，和parentId冲突(选其一)
 func (r ApiGetProgramsV3Request) ProgramIds(programIds string) ApiGetProgramsV3Request {
 	r.programIds = &programIds
+	return r
+}
+
+// 父项目集 ID, 和programIds冲突(选其一)
+func (r ApiGetProgramsV3Request) ParentId(parentId string) ApiGetProgramsV3Request {
+	r.parentId = &parentId
 	return r
 }
 
@@ -1181,6 +1195,9 @@ func (a *ProgramAPIService) GetProgramsV3Execute(r ApiGetProgramsV3Request) (*Ge
 	if r.programIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "programIds", r.programIds, "")
 	}
+	if r.parentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "parentId", r.parentId, "")
+	}
 	if r.virtualProjectIds != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "virtualProjectIds", r.virtualProjectIds, "")
 	}
@@ -1212,6 +1229,9 @@ func (a *ProgramAPIService) GetProgramsV3Execute(r ApiGetProgramsV3Request) (*Ge
 	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
 	}
 	if r.xTenantId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
@@ -1836,6 +1856,140 @@ func (a *ProgramAPIService) ListProgramStatusesV3Execute(r ApiListProgramStatuse
 	if r.xTenantId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProgramUpdateRequest struct {
+	ctx context.Context
+	ApiService *ProgramAPIService
+	programId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProgramUpdateRequest *PostV3ProgramUpdateRequest
+}
+
+// 操作人 ID
+func (r ApiPostV3ProgramUpdateRequest) XOperatorId(xOperatorId string) ApiPostV3ProgramUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProgramUpdateRequest) XTenantId(xTenantId string) ApiPostV3ProgramUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProgramUpdateRequest) PostV3ProgramUpdateRequest(postV3ProgramUpdateRequest PostV3ProgramUpdateRequest) ApiPostV3ProgramUpdateRequest {
+	r.postV3ProgramUpdateRequest = &postV3ProgramUpdateRequest
+	return r
+}
+
+func (r ApiPostV3ProgramUpdateRequest) Execute() (*PostV3ProgramUpdateResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProgramUpdateExecute(r)
+}
+
+/*
+PostV3ProgramUpdate 更新项目集信息
+
+更新项目集信息
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param programId 项目集 ID
+ @return ApiPostV3ProgramUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/68d8933e92244c2db32beebe document
+*/
+func (a *ProgramAPIService) PostV3ProgramUpdate(ctx context.Context, programId string) ApiPostV3ProgramUpdateRequest {
+	return ApiPostV3ProgramUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		programId: programId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3ProgramUpdateResponse
+func (a *ProgramAPIService) PostV3ProgramUpdateExecute(r ApiPostV3ProgramUpdateRequest) (*PostV3ProgramUpdateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3ProgramUpdateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/program/{programId}/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"programId"+"}", url.PathEscape(parameterValueToString(r.programId, "programId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProgramUpdateRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

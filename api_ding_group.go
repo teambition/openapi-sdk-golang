@@ -22,6 +22,136 @@ import (
 // DingGroupAPIService DingGroupAPI service
 type DingGroupAPIService service
 
+type ApiBindProjectGroupRequest struct {
+	ctx context.Context
+	ApiService *DingGroupAPIService
+	xTenantId *string
+	xOperatorId *string
+	bindProjectGroupRequest *BindProjectGroupRequest
+}
+
+// 租户 ID
+func (r ApiBindProjectGroupRequest) XTenantId(xTenantId string) ApiBindProjectGroupRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 操作者ID
+func (r ApiBindProjectGroupRequest) XOperatorId(xOperatorId string) ApiBindProjectGroupRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 
+func (r ApiBindProjectGroupRequest) BindProjectGroupRequest(bindProjectGroupRequest BindProjectGroupRequest) ApiBindProjectGroupRequest {
+	r.bindProjectGroupRequest = &bindProjectGroupRequest
+	return r
+}
+
+func (r ApiBindProjectGroupRequest) Execute() (*BindProjectGroupResponse, *http.Response, error) {
+	return r.ApiService.BindProjectGroupExecute(r)
+}
+
+/*
+BindProjectGroup 项目关联绑定钉钉群聊
+
+项目关联绑定钉钉群聊
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiBindProjectGroupRequest
+
+  @link https://open.teambition.com/docs/apis/65f95b1bdfa703a68f96c05e document
+*/
+func (a *DingGroupAPIService) BindProjectGroup(ctx context.Context) ApiBindProjectGroupRequest {
+	return ApiBindProjectGroupRequest{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return BindProjectGroupResponse
+func (a *DingGroupAPIService) BindProjectGroupExecute(r ApiBindProjectGroupRequest) (*BindProjectGroupResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *BindProjectGroupResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/group/bindProject"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Operator-Id", r.xOperatorId, "")
+	}
+	// body params
+	localVarPostBody = r.bindProjectGroupRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiGetBindingCidByTaskIdRequest struct {
 	ctx context.Context
 	ApiService *DingGroupAPIService

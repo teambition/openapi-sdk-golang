@@ -2337,6 +2337,523 @@ func (a *TaskAPIService) MoveTaskV3Execute(r ApiMoveTaskV3Request) (*MoveTaskV3R
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPutV3TaskNodeCompleteRequest struct {
+	ctx context.Context
+	ApiService *TaskAPIService
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+	putV3TaskNodeCompleteRequest *PutV3TaskNodeCompleteRequest
+}
+
+// 操作者ID
+func (r ApiPutV3TaskNodeCompleteRequest) XOperatorId(xOperatorId string) ApiPutV3TaskNodeCompleteRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPutV3TaskNodeCompleteRequest) XTenantId(xTenantId string) ApiPutV3TaskNodeCompleteRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPutV3TaskNodeCompleteRequest) PutV3TaskNodeCompleteRequest(putV3TaskNodeCompleteRequest PutV3TaskNodeCompleteRequest) ApiPutV3TaskNodeCompleteRequest {
+	r.putV3TaskNodeCompleteRequest = &putV3TaskNodeCompleteRequest
+	return r
+}
+
+func (r ApiPutV3TaskNodeCompleteRequest) Execute() (*PutV3TaskNodeCompleteResponse, *http.Response, error) {
+	return r.ApiService.PutV3TaskNodeCompleteExecute(r)
+}
+
+/*
+PutV3TaskNodeComplete 完成任务节点
+
+完成任务节点，仅能完成status=begin的“进行中”节点
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId 任务ID (ObjectId格式)
+ @return ApiPutV3TaskNodeCompleteRequest
+
+  @link https://open.teambition.com/docs/apis/68b6854a92244c2db3866dcb document
+*/
+func (a *TaskAPIService) PutV3TaskNodeComplete(ctx context.Context, taskId string) ApiPutV3TaskNodeCompleteRequest {
+	return ApiPutV3TaskNodeCompleteRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return PutV3TaskNodeCompleteResponse
+func (a *TaskAPIService) PutV3TaskNodeCompleteExecute(r ApiPutV3TaskNodeCompleteRequest) (*PutV3TaskNodeCompleteResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutV3TaskNodeCompleteResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/task/{taskId}/node/complete"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.putV3TaskNodeCompleteRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutV3TaskNodeListRequest struct {
+	ctx context.Context
+	ApiService *TaskAPIService
+	taskId string
+	xTenantId *string
+}
+
+// 企业 ID
+func (r ApiPutV3TaskNodeListRequest) XTenantId(xTenantId string) ApiPutV3TaskNodeListRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiPutV3TaskNodeListRequest) Execute() (*PutV3TaskNodeListResponse, *http.Response, error) {
+	return r.ApiService.PutV3TaskNodeListExecute(r)
+}
+
+/*
+PutV3TaskNodeList 获取任务节点列表
+
+获取任务节点列表
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId 任务ID
+ @return ApiPutV3TaskNodeListRequest
+
+  @link https://open.teambition.com/docs/apis/68b6854a92244c2db3866eb5 document
+*/
+func (a *TaskAPIService) PutV3TaskNodeList(ctx context.Context, taskId string) ApiPutV3TaskNodeListRequest {
+	return ApiPutV3TaskNodeListRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return PutV3TaskNodeListResponse
+func (a *TaskAPIService) PutV3TaskNodeListExecute(r ApiPutV3TaskNodeListRequest) (*PutV3TaskNodeListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutV3TaskNodeListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/task/{taskId}/node/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutV3TaskNodeRollbackRequest struct {
+	ctx context.Context
+	ApiService *TaskAPIService
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+	putV3TaskNodeRollbackRequest *PutV3TaskNodeRollbackRequest
+}
+
+// 操作者ID
+func (r ApiPutV3TaskNodeRollbackRequest) XOperatorId(xOperatorId string) ApiPutV3TaskNodeRollbackRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPutV3TaskNodeRollbackRequest) XTenantId(xTenantId string) ApiPutV3TaskNodeRollbackRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPutV3TaskNodeRollbackRequest) PutV3TaskNodeRollbackRequest(putV3TaskNodeRollbackRequest PutV3TaskNodeRollbackRequest) ApiPutV3TaskNodeRollbackRequest {
+	r.putV3TaskNodeRollbackRequest = &putV3TaskNodeRollbackRequest
+	return r
+}
+
+func (r ApiPutV3TaskNodeRollbackRequest) Execute() (*PutV3TaskNodeRollbackResponse, *http.Response, error) {
+	return r.ApiService.PutV3TaskNodeRollbackExecute(r)
+}
+
+/*
+PutV3TaskNodeRollback 回滚任务节点
+
+回滚任务节点，仅能回滚status=finish的“已完成”节点
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId 任务ID
+ @return ApiPutV3TaskNodeRollbackRequest
+
+  @link https://open.teambition.com/docs/apis/68b6854a92244c2db3866f5e document
+*/
+func (a *TaskAPIService) PutV3TaskNodeRollback(ctx context.Context, taskId string) ApiPutV3TaskNodeRollbackRequest {
+	return ApiPutV3TaskNodeRollbackRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return PutV3TaskNodeRollbackResponse
+func (a *TaskAPIService) PutV3TaskNodeRollbackExecute(r ApiPutV3TaskNodeRollbackRequest) (*PutV3TaskNodeRollbackResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutV3TaskNodeRollbackResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/task/{taskId}/node/rollback"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.putV3TaskNodeRollbackRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutV3TaskNodeUpdateRequest struct {
+	ctx context.Context
+	ApiService *TaskAPIService
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+	putV3TaskNodeUpdateRequest *PutV3TaskNodeUpdateRequest
+}
+
+// 操作者ID
+func (r ApiPutV3TaskNodeUpdateRequest) XOperatorId(xOperatorId string) ApiPutV3TaskNodeUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPutV3TaskNodeUpdateRequest) XTenantId(xTenantId string) ApiPutV3TaskNodeUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPutV3TaskNodeUpdateRequest) PutV3TaskNodeUpdateRequest(putV3TaskNodeUpdateRequest PutV3TaskNodeUpdateRequest) ApiPutV3TaskNodeUpdateRequest {
+	r.putV3TaskNodeUpdateRequest = &putV3TaskNodeUpdateRequest
+	return r
+}
+
+func (r ApiPutV3TaskNodeUpdateRequest) Execute() (*PutV3TaskNodeUpdateResponse, *http.Response, error) {
+	return r.ApiService.PutV3TaskNodeUpdateExecute(r)
+}
+
+/*
+PutV3TaskNodeUpdate 更新任务节点
+
+更新任务节点
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param taskId 任务ID
+ @return ApiPutV3TaskNodeUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/68b6854a92244c2db3867000 document
+*/
+func (a *TaskAPIService) PutV3TaskNodeUpdate(ctx context.Context, taskId string) ApiPutV3TaskNodeUpdateRequest {
+	return ApiPutV3TaskNodeUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return PutV3TaskNodeUpdateResponse
+func (a *TaskAPIService) PutV3TaskNodeUpdateExecute(r ApiPutV3TaskNodeUpdateRequest) (*PutV3TaskNodeUpdateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutV3TaskNodeUpdateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/task/{taskId}/node/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.putV3TaskNodeUpdateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiQueryTaskV3Request struct {
 	ctx context.Context
 	ApiService *TaskAPIService
@@ -2509,7 +3026,7 @@ func (r ApiRenderTaskRtfV3Request) XTenantId(xTenantId string) ApiRenderTaskRtfV
 	return r
 }
 
-// 富文本字段标识，多个标识之间用逗号分割，最多支持 50 个 - 富文本字段：&#x60;任务ID:cf:字段ID&#x60; 如 &#x60;60471fc306c1e046e63759c4:cf:63d61d1cbde6c83a2ce729d6&#x60; - 富文本备注：&#x60;任务ID:note&#x60; 如 &#x60;60471fc306c1e046e63759c4:note&#x60; 
+// 富文本字段标识，多个标识之间用逗号分割，最多支持 50 个 - 富文本字段：&#x60;任务ID:cf:字段ID&#x60; 如 &#x60;60471fc306c1e046e63759c4:cf:63d61d1cbde6c83a2ce729d6&#x60; - 富文本备注：&#x60;任务ID:note&#x60; 如 &#x60;60471fc306c1e046e63759c4:note&#x60; - 富文本进展：&#x60;任务ID:trace:进展ID&#x60; 如 &#x60;60471fc306c1e046e63759c4:trace:63d61d1cbde6c83a2ce729d6&#x60; 
 func (r ApiRenderTaskRtfV3Request) RtfFields(rtfFields string) ApiRenderTaskRtfV3Request {
 	r.rtfFields = &rtfFields
 	return r
@@ -2878,6 +3395,157 @@ func (a *TaskAPIService) SearchTasksByTQLExecute(r ApiSearchTasksByTQLRequest) (
 	}
 	if r.xOperatorId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Operator-Id", r.xOperatorId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiSearchTasksByTQLV2Request struct {
+	ctx context.Context
+	ApiService *TaskAPIService
+	xOperatorId *string
+	xTenantId *string
+	tql *string
+	pageSize *int32
+	pageToken *string
+}
+
+// 操作者ID, 为空时查询全部
+func (r ApiSearchTasksByTQLV2Request) XOperatorId(xOperatorId string) ApiSearchTasksByTQLV2Request {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiSearchTasksByTQLV2Request) XTenantId(xTenantId string) ApiSearchTasksByTQLV2Request {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 企业下任务搜索TQL语句
+func (r ApiSearchTasksByTQLV2Request) Tql(tql string) ApiSearchTasksByTQLV2Request {
+	r.tql = &tql
+	return r
+}
+
+// 分页长度
+func (r ApiSearchTasksByTQLV2Request) PageSize(pageSize int32) ApiSearchTasksByTQLV2Request {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 分页标
+func (r ApiSearchTasksByTQLV2Request) PageToken(pageToken string) ApiSearchTasksByTQLV2Request {
+	r.pageToken = &pageToken
+	return r
+}
+
+func (r ApiSearchTasksByTQLV2Request) Execute() (*SearchTasksByTQLResponse, *http.Response, error) {
+	return r.ApiService.SearchTasksByTQLV2Execute(r)
+}
+
+/*
+SearchTasksByTQLV2 通过TQL搜索自由任务和项目任务ID (V2)
+
+通过TQL搜索自由任务和项目任务ID
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @return ApiSearchTasksByTQLV2Request
+
+  @link https://open.teambition.com/docs/apis/68672b12912d20d3b52442f2 document
+*/
+func (a *TaskAPIService) SearchTasksByTQLV2(ctx context.Context) ApiSearchTasksByTQLV2Request {
+	return ApiSearchTasksByTQLV2Request{
+		ApiService: a,
+		ctx: ctx,
+	}
+}
+
+// Execute executes the request
+//  @return SearchTasksByTQLResponse
+func (a *TaskAPIService) SearchTasksByTQLV2Execute(r ApiSearchTasksByTQLV2Request) (*SearchTasksByTQLResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *SearchTasksByTQLResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v2/all-task/search"
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.tql != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tql", r.tql, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {

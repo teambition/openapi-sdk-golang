@@ -90,12 +90,14 @@ func main() {
 *CustomfieldAPI* | [**SearchOrgCustomfiledV3**](https://open.teambition.com/docs/apis/6321c6d0912d20d3b5a49355) | **Get** /v3/customfield/search | 搜索企业自定义字段
 *CustomfieldAPI* | [**UpdateCustomfieldV3**](https://open.teambition.com/docs/apis/6321c6d0912d20d3b5a49391) | **Put** /v3/customfield/{customfieldId}/update | 更新自定义字段，默认更新企业自定义字段，如果传递项目ID，则更新项目下自定义字段
 *CustomfieldAPI* | [**UpdateFieldChoicesV3**](https://open.teambition.com/docs/apis/64057c9b912d20d3b5e63e6c) | **Post** /v3/customfield/{customfieldId}/choice/update | 更新层级字段选项
+*DingGroupAPI* | [**BindProjectGroup**](https://open.teambition.com/docs/apis/65f95b1bdfa703a68f96c05e) | **Post** /group/bindProject | 项目关联绑定钉钉群聊
 *DingGroupAPI* | [**GetBindingCidByTaskId**](https://open.teambition.com/docs/apis/664c9212e678cdcec87811ba) | **Get** /group/getBindingCidByTaskId | 通过taskId查询该任务关联的任务群Id
 *DingGroupAPI* | [**GetBindingCidsByProjectId**](https://open.teambition.com/docs/apis/6378b1e6912d20d3b517bea6) | **Get** /group/getBindingCidsByProjectId | 通过projectid查询关联的全员可见的群聊ids
 *DingGroupAPI* | [**GetBindingProjectIdsByCid**](https://open.teambition.com/docs/apis/6378b1e6912d20d3b517bf09) | **Get** /group/getBindingProjectIdsByCid | 根据群聊cid获取绑定的项目projectid
 *DingtalkAPI* | [**BindProjectWorkspace**](https://open.teambition.com/docs/apis/65af6cec2442f01adbdedec9) | **Post** /workspace/bind-project | 绑定已有知识库
 *DingtalkAPI* | [**GetTaskIdsByApproveId**](https://open.teambition.com/docs/apis/64f5d782a96085002bab6976) | **Get** /approve/getTaskIdsByInstanceId | 通过钉钉审批实例ID反查对应任务IDs
 *DingtalkAPI* | [**GetWorkspaceInfo**](https://open.teambition.com/docs/apis/66b9c71e68fd651bec0a05d3) | **Get** /workspace/query | 获取绑定知识库信息
+*FavoritesAPI* | [**GetV3FavoriteList**](https://open.teambition.com/docs/apis/68da36dd92244c2db35778a9) | **Get** /v3/favorite/list | 获取收藏夹关联的主体ID
 *FileAPI* | [**BatchGetFileDetails**](https://open.teambition.com/docs/apis/65b20e66912d20d3b5781196) | **Post** /v3/file/query/by-resource-ids | 根据 resourceId 批量获取文件详情
 *FileAPI* | [**CreateFileV3**](https://open.teambition.com/docs/apis/6411504e912d20d3b56ec570) | **Post** /v3/work/create | 创建文件库文件
 *FileAPI* | [**CreateFolderV3**](https://open.teambition.com/docs/apis/64db2903912d20d3b5bb0034) | **Post** /v3/collection/create | 创建文件夹
@@ -103,10 +105,18 @@ func main() {
 *FileAPI* | [**GetFileDetailV3**](https://open.teambition.com/docs/apis/64db2921912d20d3b5bb5250) | **Get** /v3/work/query | 获取项目文件详情
 *FileAPI* | [**GetFileToken**](https://open.teambition.com/docs/apis/65810e45912d20d3b5887d1b) | **Post** /v3/file/file-token | 从现有文件资源创建 fileToken，可用于创建其他文件资源
 *FileAPI* | [**GetFolderDetailV3**](https://open.teambition.com/docs/apis/64db2903912d20d3b5bb021f) | **Get** /v3/collection/query | 获取文件夹详情
+*FileAPI* | [**GetV3WorkActivityQuery**](https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd730f) | **Get** /v3/work/{workId}/activity/list | 获取文件动态
+*FileAPI* | [**GetV3WorkVersionQuery**](https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd75f9) | **Get** /v3/work/{workId}/version/query | 获取文件所有版本
 *FileAPI* | [**ListFilesV3**](https://open.teambition.com/docs/apis/6411504e912d20d3b56ec5ff) | **Get** /v3/work/list | 获取文件列表
 *FileAPI* | [**MoveFileV3**](https://open.teambition.com/docs/apis/64db2930912d20d3b5bb7d96) | **Post** /v3/work/{workId}/parent | 项目内移动文件
 *FileAPI* | [**MoveFolderV3**](https://open.teambition.com/docs/apis/64db2903912d20d3b5bb00c9) | **Post** /v3/collection/{collectionId}/parent | 移动文件夹
-*FileAPI* | [**SearchFilesV3**](https://open.teambition.com/docs/apis/68510bf3912d20d3b5cd319e) | **Get** /v3/work/search | 搜索文件列表
+*FileAPI* | [**PostV3CollectionArchive**](https://open.teambition.com/docs/apis/688c2ab4912d20d3b5bd71b3) | **Post** /v3/collection/{collectionId}/archive | 文件夹移入回收站
+*FileAPI* | [**PostV3CollectionDelete**](https://open.teambition.com/docs/apis/688c2ab4912d20d3b5bd7239) | **Post** /v3/collection/{collectionId}/delete | 删除文件夹
+*FileAPI* | [**PostV3WorkArchive**](https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd737c) | **Post** /v3/work/{workId}/archive | 文件移入回收站
+*FileAPI* | [**PostV3WorkInvolvememberUpdate**](https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd74bf) | **Post** /v3/work/{workId}/involveMember/update | 修改文件参与者
+*FileAPI* | [**PostV3WorkMainSet**](https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd751d) | **Post** /v3/work/{workId}/main-version/update | 设置文件主版本
+*FileAPI* | [**PostV3WorkVisibleUpdate**](https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd7652) | **Post** /v3/work/{workId}/visible/update | 修改文件可见性
+*FileAPI* | [**SearchFilesV3**](https://open.teambition.com/docs/apis/68510bf3912d20d3b5cd319e) | **Get** /v3/work/search | 深度搜索项目内的文件和文件夹
 *FileAPI* | [**UpdateFileNameV3**](https://open.teambition.com/docs/apis/64db2930912d20d3b5bb7d17) | **Post** /v3/work/{workId}/name/update | 更新文件标题
 *FileAPI* | [**UpdateFileVersionV3**](https://open.teambition.com/docs/apis/64db2930912d20d3b5bb7e0e) | **Post** /v3/work/{workId}/version | 更新文件版本
 *FileAPI* | [**UpdateFolderTitleV3**](https://open.teambition.com/docs/apis/64db2903912d20d3b5bb0173) | **Post** /v3/collection/{collectionId}/title/update | 更新文件夹标题
@@ -151,6 +161,7 @@ func main() {
 *ProgramAPI* | [**ListProgramProjectsV3**](https://open.teambition.com/docs/apis/64e810ff912d20d3b58fa85c) | **Get** /v3/program/{programId}/projects | 查询项目集内项目
 *ProgramAPI* | [**ListProgramStatusCustomFieldsV3**](https://open.teambition.com/docs/apis/66e00a72912d20d3b5a157f5) | **Get** /v3/program/{programId}/status/customfield/list | 查询项目集概览自定义字段列表
 *ProgramAPI* | [**ListProgramStatusesV3**](https://open.teambition.com/docs/apis/66e00a73912d20d3b5a158dd) | **Get** /v3/program/{programId}/status/list | 查询项目集状态和状态历史
+*ProgramAPI* | [**PostV3ProgramUpdate**](https://open.teambition.com/docs/apis/68d8933e92244c2db32beebe) | **Post** /v3/program/{programId}/update | 更新项目集信息
 *ProgramAPI* | [**RemoveProgramMembersV3**](https://open.teambition.com/docs/apis/66693d96912d20d3b5ee56af) | **Post** /v3/program/{programId}/member/delete | 批量删除项目集内的成员
 *ProgramAPI* | [**RemoveProgramProjectV3**](https://open.teambition.com/docs/apis/64e810ff912d20d3b58fa7d3) | **Post** /v3/program/{programId}/project/{projectId}/delete | 删除项目集内的项目
 *ProjectAPI* | [**AddProjectGroupMemberV3**](https://open.teambition.com/docs/apis/6646e45a912d20d3b576c2f0) | **Post** /v3/project-tag/{projectTagId}/member/create | 创建项目分组成员
@@ -275,14 +286,35 @@ func main() {
 *ProjectAPI* | [**UpdateTestCaseGroup**](https://open.teambition.com/docs/apis/6321c6d1912d20d3b5a4a1f2) | **Post** /v3/project/{projectId}/testcase/{testcaseId}/commongroup | 更新项目级测试用例分组
 *ProjectplanAPI* | [**CreatePlanApprovalV3**](https://open.teambition.com/docs/apis/67f36da38657139bff2bdd65) | **Post** /v3/projectplan/plans/{projectPlanId}/approve | 创建计划审批信息
 *ProjectplanAPI* | [**CreateProjectPlanStatusSettingV3**](https://open.teambition.com/docs/apis/67dd2f378657139bff29cf9c) | **Post** /v3/projectplan/projects/{projectId}/planCustomStatusSetting | 配置项目级计划自定义状态信息
-*ProjectplanAPI* | [**ExecutePlanEventV3**](https://open.teambition.com/docs/apis/67f36bbb8657139bff2bd260) | **Put** /v3/projectplan/plans/{projectPlanId}/execute/{event} | 更改计划状态
+*ProjectplanAPI* | [**DeleteV3ProjectplanScenariofieldDelete**](https://open.teambition.com/docs/apis/68c2280892244c2db312d350) | **Delete** /v3/projectplan/{projectPlanId}/scenariofield/{scenariofieldId}/delete | 删除计划字段配置
+*ProjectplanAPI* | [**DeleteV3ProjectplanScenariofieldsDeletescenariofields**](https://open.teambition.com/docs/apis/68be840192244c2db391a717) | **Delete** /v3/projectplan/{projectPlanId}/scenariofields/{scenariofieldId}/deleteScenariofields | 删除计划字段配置
+*ProjectplanAPI* | [**ExecutePlanEventV3**](https://open.teambition.com/docs/apis/67f36bbb8657139bff2bd260) | **Put** /v3/projectplan/plans/{projectPlanId}/execute/{event} | 更改计划状态(发布/变更/取消变更)
 *ProjectplanAPI* | [**GetPlanStatusV3**](https://open.teambition.com/docs/apis/67dd0bd08657139bff298e21) | **Get** /v3/projectplan/plans/{projectPlanId}/status-info | 查询计划状态信息
 *ProjectplanAPI* | [**GetPlanV3**](https://open.teambition.com/docs/apis/67dab418a30a3554a5fa69a2) | **Get** /v3/projectplan/plans/{projectPlanId}/query | 查询计划
 *ProjectplanAPI* | [**GetProjectPlanStatusSettingV3**](https://open.teambition.com/docs/apis/67dd27bc8657139bff29b100) | **Get** /v3/projectplan/projects/{projectId}/planCustomStatusSetting | 获取项目级计划自定义状态配置
+*ProjectplanAPI* | [**GetV3ProjectplanListscenariofields**](https://open.teambition.com/docs/apis/68be727692244c2db30fb2ab) | **Get** /v3/projectplan/{projectPlanId}/listScenariofields | 查询计划自定义字段
+*ProjectplanAPI* | [**GetV3ProjectplanListscenariofieldvalues**](https://open.teambition.com/docs/apis/68be729392244c2db3108604) | **Get** /v3/projectplan/{projectPlanId}/listScenariofieldValues | 获取字段值
+*ProjectplanAPI* | [**GetV3ProjectplanOperableAccessPolicyList**](https://open.teambition.com/docs/apis/68c8d1bb92244c2db3644e90) | **Get** /v3/projectplan/{projectPlanId}/operable-access-policy/list | 获取当前计划可设置加锁/解锁的动作
+*ProjectplanAPI* | [**GetV3ProjectplanPlansList**](https://open.teambition.com/docs/apis/68c26bcc92244c2db3fba872) | **Get** /v3/projectplan/plans/{projectId}/list | 查询用户可见的计划列表
+*ProjectplanAPI* | [**GetV3ProjectplanScenariofieldList**](https://open.teambition.com/docs/apis/68c2287392244c2db315f81a) | **Get** /v3/projectplan/{projectPlanId}/scenariofield/list | 查询计划自定义字段
+*ProjectplanAPI* | [**GetV3ProjectplanScenariofieldValueList**](https://open.teambition.com/docs/apis/68c2281892244c2db3134763) | **Get** /v3/projectplan/{projectPlanId}/scenariofield/value/list | 获取字段值
+*ProjectplanAPI* | [**GetV3ProjectplanTaskOperableAccessPolicyList**](https://open.teambition.com/docs/apis/68c8cfba92244c2db3558f77) | **Get** /v3/projectplan/{projectPlanId}/task/{taskId}/operable-access-policy/list | 获取当前计划任务可设置加锁/解锁的动作
+*ProjectplanAPI* | [**GetV3ProjectplanTaskPlansTasksSubtasks**](https://open.teambition.com/docs/apis/68ba4c2292244c2db3c17acf) | **Get** /v3/projectplan-task/plans/{projectPlanId}/tasks/{taskId}/subtasks | 获取计划任务的子任务
 *ProjectplanAPI* | [**ListPlanMemberRolesV3**](https://open.teambition.com/docs/apis/684a3a42912d20d3b5bcea9f) | **Get** /v3/projectplan/{projectPlanId}/members/list | 查询计划成员角色
 *ProjectplanAPI* | [**ListPlanVersionsV3**](https://open.teambition.com/docs/apis/684a341d912d20d3b5aff931) | **Get** /v3/projectplan/{projectPlanId}/version/list | 查询计划版本列表
 *ProjectplanAPI* | [**ListProjectPlanTasksLegacyV3**](https://open.teambition.com/docs/apis/682d4da6912d20d3b5bc4684) | **Get** /v3/projectplan-task/plans/{projectPlanId}/tasks | 获取计划任务列表
 *ProjectplanAPI* | [**ListVisiblePlansV3**](https://open.teambition.com/docs/apis/682464b6912d20d3b5175b79) | **Get** /v3/projectplan/projects/{projectId}/list | 查询用户可见的计划列表
+*ProjectplanAPI* | [**PostV3ProjectplanChangeRuleUpdate**](https://open.teambition.com/docs/apis/68d23a7392244c2db34a925b) | **Post** /v3/projectplan/{projectPlanId}/change-rule/update | 更新计划发布规则
+*ProjectplanAPI* | [**PostV3ProjectplanCreatescenariofields**](https://open.teambition.com/docs/apis/68be782192244c2db339b16a) | **Post** /v3/projectplan/{projectPlanId}/createScenariofields | 关联计划自定义字段
+*ProjectplanAPI* | [**PostV3ProjectplanProjectPlans**](https://open.teambition.com/docs/apis/68be726f92244c2db30f7ba7) | **Post** /v3/projectplan/project/{projectId}/plans | 创建计划
+*ProjectplanAPI* | [**PostV3ProjectplanScenariofieldUpdate**](https://open.teambition.com/docs/apis/68c2281392244c2db3132177) | **Post** /v3/projectplan/{projectPlanId}/scenariofield/update | 关联计划自定义字段
+*ProjectplanAPI* | [**PostV3ProjectplanTaskAccessPolicyUpdate**](https://open.teambition.com/docs/apis/68c8cfb292244c2db3555244) | **Post** /v3/projectplan/{projectPlanId}/task/{taskId}/access-policy/update | 更新计划任务加锁/解锁动作
+*ProjectplanAPI* | [**PostV3ProjectplanTaskPlansAddexisttasks**](https://open.teambition.com/docs/apis/68ba4c2292244c2db3c17b69) | **Post** /v3/projectplan-task/plans/{projectPlanId}/addExistTasks | 将项目任务加入到计划
+*ProjectplanAPI* | [**PostV3ProjectplanTaskPlansTasks**](https://open.teambition.com/docs/apis/68ba4c2392244c2db3c17e08) | **Post** /v3/projectplan-task/plans/{projectPlanId}/tasks | 创建计划任务
+*ProjectplanAPI* | [**PostV3ProjectplanTaskPlansTasksArchive**](https://open.teambition.com/docs/apis/68ba4c2392244c2db3c17f56) | **Post** /v3/projectplan-task/plans/{projectPlanId}/tasks/{taskId}/archive | 删除计划任务
+*ProjectplanAPI* | [**PutV3ProjectplanScenariofieldValueUpdate**](https://open.teambition.com/docs/apis/68c2282492244c2db313aa44) | **Put** /v3/projectplan/{projectPlanId}/scenariofield/{scenariofieldId}/value/update | 更新字段值
+*ProjectplanAPI* | [**PutV3ProjectplanScenariofieldsUpdatescenariofieldvalue**](https://open.teambition.com/docs/apis/68be83fa92244c2db39179e8) | **Put** /v3/projectplan/{projectPlanId}/scenariofields/{scenariofieldId}/updateScenariofieldValue | 更新字段值
+*ProjectplanAPI* | [**PutV3ProjectplanTaskPlansTasksExecutorid**](https://open.teambition.com/docs/apis/68ba4c2392244c2db3c1800c) | **Put** /v3/projectplan-task/plans/{projectPlanId}/tasks/{taskId}/executorId | 更新计划任务执行者
 *ProjectplanAPI* | [**SearchProjectPlanTasksV3**](https://open.teambition.com/docs/apis/6822be41912d20d3b528f442) | **Get** /v3/project/{projectId}/plan-task/search | 通过TQL搜索项目计划任务
 *ProjectplanAPI* | [**UpdatePlanApprovalV3**](https://open.teambition.com/docs/apis/67f36f5e8657139bff2be59c) | **Put** /v3/projectplan/plans/{projectPlanId}/approve | 更新计划审批信息
 *ProjectplanAPI* | [**UpdatePlanCustomStatusV3**](https://open.teambition.com/docs/apis/67dd2d338657139bff29c843) | **Put** /v3/projectplan/plans/{projectPlanId}/customStatus | 配置计划自定义状态
@@ -317,10 +349,15 @@ func main() {
 *TaskAPI* | [**ListTaskActivitiesV3**](https://open.teambition.com/docs/apis/6363bcfb912d20d3b56fb3f4) | **Get** /v3/task/{taskId}/activity/list | 列出任务动态
 *TaskAPI* | [**MoveOrgTaskToProject**](https://open.teambition.com/docs/apis/6823ee2e912d20d3b52ae3da) | **Post** /v3/organization-task/{taskId}/move | 轻任务移动到项目中
 *TaskAPI* | [**MoveTaskV3**](https://open.teambition.com/docs/apis/6321c6d2912d20d3b5a4a69f) | **Put** /v3/task/{taskId}/move | 跨项目移动任务
+*TaskAPI* | [**PutV3TaskNodeComplete**](https://open.teambition.com/docs/apis/68b6854a92244c2db3866dcb) | **Put** /v3/task/{taskId}/node/complete | 完成任务节点
+*TaskAPI* | [**PutV3TaskNodeList**](https://open.teambition.com/docs/apis/68b6854a92244c2db3866eb5) | **Get** /v3/task/{taskId}/node/list | 获取任务节点列表
+*TaskAPI* | [**PutV3TaskNodeRollback**](https://open.teambition.com/docs/apis/68b6854a92244c2db3866f5e) | **Put** /v3/task/{taskId}/node/rollback | 回滚任务节点
+*TaskAPI* | [**PutV3TaskNodeUpdate**](https://open.teambition.com/docs/apis/68b6854a92244c2db3867000) | **Put** /v3/task/{taskId}/node/update | 更新任务节点
 *TaskAPI* | [**QueryTaskV3**](https://open.teambition.com/docs/apis/6321c6d2912d20d3b5a4a7b8) | **Get** /v3/task/query | 查询任务详情
 *TaskAPI* | [**RenderTaskRtfV3**](https://open.teambition.com/docs/apis/65309201912d20d3b5cf2ab8) | **Get** /v3/task/rtf/render | 任务富文本内容渲染为 html
 *TaskAPI* | [**RestoreTaskV3**](https://open.teambition.com/docs/apis/66601201912d20d3b584bcc8) | **Post** /v3/task/{taskId}/restore | 恢复任务(移出回收站)
 *TaskAPI* | [**SearchTasksByTQL**](https://open.teambition.com/docs/apis/64264d3e912d20d3b5883b0e) | **Get** /all-task/search | 通过TQL搜索自由任务和项目任务ID
+*TaskAPI* | [**SearchTasksByTQLV2**](https://open.teambition.com/docs/apis/68672b12912d20d3b52442f2) | **Get** /v2/all-task/search | 通过TQL搜索自由任务和项目任务ID (V2)
 *TaskAPI* | [**SearchUserTasksV3**](https://open.teambition.com/docs/apis/63ee4160912d20d3b54548a6) | **Get** /v3/usertasks/search | 搜索用户的任务
 *TaskAPI* | [**UpdateTaskContentV3**](https://open.teambition.com/docs/apis/6321c6d1912d20d3b5a4a4a0) | **Put** /v3/task/{taskId}/content | 更新任务标题
 *TaskAPI* | [**UpdateTaskCusomFieldByInstanceV3**](https://open.teambition.com/docs/apis/6321c6d1912d20d3b5a4a545) | **Post** /v3/task/{taskId}/customfield-instance/{instanceId}/update | 根据字段InstanceId更新任务自定义字段值(弃用)

@@ -25,8 +25,10 @@ type ListFilesV3ResponseResultWorksInner struct {
 	CreatorId *string `json:"creatorId,omitempty"`
 	// 文件夹ID
 	ParentId *string `json:"parentId,omitempty"`
-	// 文件路径
+	// 文件夹路径
 	PrefixPath *string `json:"prefixPath,omitempty"`
+	// 文件夹是否归档
+	IsArchived *bool `json:"isArchived,omitempty"`
 	// 文件名，包含扩展名，如：`example.jpg`
 	FileName *string `json:"fileName,omitempty"`
 	// 文件的 mimeType，如：`image/jpeg`
@@ -182,6 +184,38 @@ func (o *ListFilesV3ResponseResultWorksInner) HasPrefixPath() bool {
 // SetPrefixPath gets a reference to the given string and assigns it to the PrefixPath field.
 func (o *ListFilesV3ResponseResultWorksInner) SetPrefixPath(v string) {
 	o.PrefixPath = &v
+}
+
+// GetIsArchived returns the IsArchived field value if set, zero value otherwise.
+func (o *ListFilesV3ResponseResultWorksInner) GetIsArchived() bool {
+	if o == nil || IsNil(o.IsArchived) {
+		var ret bool
+		return ret
+	}
+	return *o.IsArchived
+}
+
+// GetIsArchivedOk returns a tuple with the IsArchived field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListFilesV3ResponseResultWorksInner) GetIsArchivedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsArchived) {
+		return nil, false
+	}
+	return o.IsArchived, true
+}
+
+// HasIsArchived returns a boolean if a field has been set.
+func (o *ListFilesV3ResponseResultWorksInner) HasIsArchived() bool {
+	if o != nil && !IsNil(o.IsArchived) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsArchived gets a reference to the given bool and assigns it to the IsArchived field.
+func (o *ListFilesV3ResponseResultWorksInner) SetIsArchived(v bool) {
+	o.IsArchived = &v
 }
 
 // GetFileName returns the FileName field value if set, zero value otherwise.
@@ -365,6 +399,9 @@ func (o ListFilesV3ResponseResultWorksInner) ToMap() (map[string]interface{}, er
 	}
 	if !IsNil(o.PrefixPath) {
 		toSerialize["prefixPath"] = o.PrefixPath
+	}
+	if !IsNil(o.IsArchived) {
+		toSerialize["isArchived"] = o.IsArchived
 	}
 	if !IsNil(o.FileName) {
 		toSerialize["fileName"] = o.FileName

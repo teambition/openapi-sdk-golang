@@ -28,7 +28,7 @@ type CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsI
 	// type = 'action'，设置此值，存储action内容 
 	Value *string `json:"value,omitempty"`
 	// type = 'link' 或 'iframe'时，设置此值，存储跳转链接地址
-	Url string `json:"url"`
+	Url *string `json:"url,omitempty"`
 	// 挂载
 	Payload interface{} `json:"payload,omitempty"`
 }
@@ -37,11 +37,10 @@ type CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsI
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner(name string, type_ string, url string) *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner {
+func NewCreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner(name string, type_ string) *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner {
 	this := CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner{}
 	this.Name = name
 	this.Type = type_
-	this.Url = url
 	return &this
 }
 
@@ -165,28 +164,36 @@ func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActi
 	o.Value = &v
 }
 
-// GetUrl returns the Url field value
+// GetUrl returns the Url field value if set, zero value otherwise.
 func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner) GetUrl() string {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		var ret string
 		return ret
 	}
-
-	return o.Url
+	return *o.Url
 }
 
-// GetUrlOk returns a tuple with the Url field value
+// GetUrlOk returns a tuple with the Url field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner) GetUrlOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Url) {
 		return nil, false
 	}
-	return &o.Url, true
+	return o.Url, true
 }
 
-// SetUrl sets field value
+// HasUrl returns a boolean if a field has been set.
+func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner) HasUrl() bool {
+	if o != nil && !IsNil(o.Url) {
+		return true
+	}
+
+	return false
+}
+
+// SetUrl gets a reference to the given string and assigns it to the Url field.
 func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner) SetUrl(v string) {
-	o.Url = v
+	o.Url = &v
 }
 
 // GetPayload returns the Payload field value if set, zero value otherwise (both if not set or set to explicit null).
@@ -240,7 +247,9 @@ func (o CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActio
 	if !IsNil(o.Value) {
 		toSerialize["value"] = o.Value
 	}
-	toSerialize["url"] = o.Url
+	if !IsNil(o.Url) {
+		toSerialize["url"] = o.Url
+	}
 	if o.Payload != nil {
 		toSerialize["payload"] = o.Payload
 	}

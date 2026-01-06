@@ -20,6 +20,8 @@ var _ MappedNullable = &QueryOrgUserCasesV3ResponseResultInner{}
 // QueryOrgUserCasesV3ResponseResultInner struct for QueryOrgUserCasesV3ResponseResultInner
 type QueryOrgUserCasesV3ResponseResultInner struct {
 	Commongroup *QueryOrgUserCasesV3ResponseResultInnerCommongroup `json:"commongroup,omitempty"`
+	// 自定义字段列表
+	Customfields []QueryOrgUserCasesV3ResponseResultInnerCustomfieldsInner `json:"customfields,omitempty"`
 	// 测试用例创建时间(UTC)
 	Created *string `json:"created,omitempty"`
 	// 创建者 ID
@@ -89,6 +91,38 @@ func (o *QueryOrgUserCasesV3ResponseResultInner) HasCommongroup() bool {
 // SetCommongroup gets a reference to the given QueryOrgUserCasesV3ResponseResultInnerCommongroup and assigns it to the Commongroup field.
 func (o *QueryOrgUserCasesV3ResponseResultInner) SetCommongroup(v QueryOrgUserCasesV3ResponseResultInnerCommongroup) {
 	o.Commongroup = &v
+}
+
+// GetCustomfields returns the Customfields field value if set, zero value otherwise.
+func (o *QueryOrgUserCasesV3ResponseResultInner) GetCustomfields() []QueryOrgUserCasesV3ResponseResultInnerCustomfieldsInner {
+	if o == nil || IsNil(o.Customfields) {
+		var ret []QueryOrgUserCasesV3ResponseResultInnerCustomfieldsInner
+		return ret
+	}
+	return o.Customfields
+}
+
+// GetCustomfieldsOk returns a tuple with the Customfields field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *QueryOrgUserCasesV3ResponseResultInner) GetCustomfieldsOk() ([]QueryOrgUserCasesV3ResponseResultInnerCustomfieldsInner, bool) {
+	if o == nil || IsNil(o.Customfields) {
+		return nil, false
+	}
+	return o.Customfields, true
+}
+
+// HasCustomfields returns a boolean if a field has been set.
+func (o *QueryOrgUserCasesV3ResponseResultInner) HasCustomfields() bool {
+	if o != nil && !IsNil(o.Customfields) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomfields gets a reference to the given []QueryOrgUserCasesV3ResponseResultInnerCustomfieldsInner and assigns it to the Customfields field.
+func (o *QueryOrgUserCasesV3ResponseResultInner) SetCustomfields(v []QueryOrgUserCasesV3ResponseResultInnerCustomfieldsInner) {
+	o.Customfields = v
 }
 
 // GetCreated returns the Created field value if set, zero value otherwise.
@@ -423,6 +457,9 @@ func (o QueryOrgUserCasesV3ResponseResultInner) ToMap() (map[string]interface{},
 	toSerialize := map[string]interface{}{}
 	if !IsNil(o.Commongroup) {
 		toSerialize["commongroup"] = o.Commongroup
+	}
+	if !IsNil(o.Customfields) {
+		toSerialize["customfields"] = o.Customfields
 	}
 	if !IsNil(o.Created) {
 		toSerialize["created"] = o.Created

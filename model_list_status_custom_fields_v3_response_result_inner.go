@@ -27,6 +27,8 @@ type ListStatusCustomFieldsV3ResponseResultInner struct {
 	OriginalId *string `json:"originalId,omitempty"`
 	// 字段名称(冗余)
 	Name *string `json:"name,omitempty"`
+	// 字段别名
+	Alias *string `json:"alias,omitempty"`
 	// 字段类型(冗余)
 	Type *string `json:"type,omitempty"`
 	// 高级字段类型名(冗余)
@@ -181,6 +183,38 @@ func (o *ListStatusCustomFieldsV3ResponseResultInner) SetName(v string) {
 	o.Name = &v
 }
 
+// GetAlias returns the Alias field value if set, zero value otherwise.
+func (o *ListStatusCustomFieldsV3ResponseResultInner) GetAlias() string {
+	if o == nil || IsNil(o.Alias) {
+		var ret string
+		return ret
+	}
+	return *o.Alias
+}
+
+// GetAliasOk returns a tuple with the Alias field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListStatusCustomFieldsV3ResponseResultInner) GetAliasOk() (*string, bool) {
+	if o == nil || IsNil(o.Alias) {
+		return nil, false
+	}
+	return o.Alias, true
+}
+
+// HasAlias returns a boolean if a field has been set.
+func (o *ListStatusCustomFieldsV3ResponseResultInner) HasAlias() bool {
+	if o != nil && !IsNil(o.Alias) {
+		return true
+	}
+
+	return false
+}
+
+// SetAlias gets a reference to the given string and assigns it to the Alias field.
+func (o *ListStatusCustomFieldsV3ResponseResultInner) SetAlias(v string) {
+	o.Alias = &v
+}
+
 // GetType returns the Type field value if set, zero value otherwise.
 func (o *ListStatusCustomFieldsV3ResponseResultInner) GetType() string {
 	if o == nil || IsNil(o.Type) {
@@ -330,6 +364,9 @@ func (o ListStatusCustomFieldsV3ResponseResultInner) ToMap() (map[string]interfa
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.Alias) {
+		toSerialize["alias"] = o.Alias
 	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type

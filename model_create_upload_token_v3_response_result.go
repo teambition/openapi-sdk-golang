@@ -23,6 +23,9 @@ type CreateUploadTokenV3ResponseResult struct {
 	Upload *CreateUploadTokenV3ResponseResultUpload `json:"upload,omitempty"`
 	// 文件Token
 	Token *string `json:"token,omitempty"`
+	// 预签名URL，用于在有效期内以PUT方式上传文件
+	UploadUrl *string `json:"uploadUrl,omitempty"`
+	UploadFormData *CreateUploadTokenV3ResponseResultUploadFormData `json:"uploadFormData,omitempty"`
 }
 
 // NewCreateUploadTokenV3ResponseResult instantiates a new CreateUploadTokenV3ResponseResult object
@@ -138,6 +141,70 @@ func (o *CreateUploadTokenV3ResponseResult) SetToken(v string) {
 	o.Token = &v
 }
 
+// GetUploadUrl returns the UploadUrl field value if set, zero value otherwise.
+func (o *CreateUploadTokenV3ResponseResult) GetUploadUrl() string {
+	if o == nil || IsNil(o.UploadUrl) {
+		var ret string
+		return ret
+	}
+	return *o.UploadUrl
+}
+
+// GetUploadUrlOk returns a tuple with the UploadUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateUploadTokenV3ResponseResult) GetUploadUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.UploadUrl) {
+		return nil, false
+	}
+	return o.UploadUrl, true
+}
+
+// HasUploadUrl returns a boolean if a field has been set.
+func (o *CreateUploadTokenV3ResponseResult) HasUploadUrl() bool {
+	if o != nil && !IsNil(o.UploadUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetUploadUrl gets a reference to the given string and assigns it to the UploadUrl field.
+func (o *CreateUploadTokenV3ResponseResult) SetUploadUrl(v string) {
+	o.UploadUrl = &v
+}
+
+// GetUploadFormData returns the UploadFormData field value if set, zero value otherwise.
+func (o *CreateUploadTokenV3ResponseResult) GetUploadFormData() CreateUploadTokenV3ResponseResultUploadFormData {
+	if o == nil || IsNil(o.UploadFormData) {
+		var ret CreateUploadTokenV3ResponseResultUploadFormData
+		return ret
+	}
+	return *o.UploadFormData
+}
+
+// GetUploadFormDataOk returns a tuple with the UploadFormData field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateUploadTokenV3ResponseResult) GetUploadFormDataOk() (*CreateUploadTokenV3ResponseResultUploadFormData, bool) {
+	if o == nil || IsNil(o.UploadFormData) {
+		return nil, false
+	}
+	return o.UploadFormData, true
+}
+
+// HasUploadFormData returns a boolean if a field has been set.
+func (o *CreateUploadTokenV3ResponseResult) HasUploadFormData() bool {
+	if o != nil && !IsNil(o.UploadFormData) {
+		return true
+	}
+
+	return false
+}
+
+// SetUploadFormData gets a reference to the given CreateUploadTokenV3ResponseResultUploadFormData and assigns it to the UploadFormData field.
+func (o *CreateUploadTokenV3ResponseResult) SetUploadFormData(v CreateUploadTokenV3ResponseResultUploadFormData) {
+	o.UploadFormData = &v
+}
+
 func (o CreateUploadTokenV3ResponseResult) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -156,6 +223,12 @@ func (o CreateUploadTokenV3ResponseResult) ToMap() (map[string]interface{}, erro
 	}
 	if !IsNil(o.Token) {
 		toSerialize["token"] = o.Token
+	}
+	if !IsNil(o.UploadUrl) {
+		toSerialize["uploadUrl"] = o.UploadUrl
+	}
+	if !IsNil(o.UploadFormData) {
+		toSerialize["uploadFormData"] = o.UploadFormData
 	}
 	return toSerialize, nil
 }

@@ -22,7 +22,7 @@ type CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner struct {
 	// 状态值，建议设置为‘custom:****’的形式，不可设置为‘editting’,‘approving’,‘refuse’,‘waitPublish’,‘publishing’,‘published’
 	Value string `json:"value"`
 	// 状态名称
-	Name string `json:"name"`
+	Name *string `json:"name,omitempty"`
 	// 状态颜色
 	Color *string `json:"color,omitempty"`
 	// 是否禁用编辑
@@ -31,16 +31,17 @@ type CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner struct {
 	IsApproving *bool `json:"isApproving,omitempty"`
 	// 计划下一操作列表
 	NextActions []CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerNextActionsInner `json:"nextActions,omitempty"`
+	// 计划额外的操作列表
+	ExtNextActions []CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerExtNextActionsInner `json:"extNextActions,omitempty"`
 }
 
 // NewCreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner instantiates a new CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner object
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewCreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner(value string, name string) *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner {
+func NewCreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner(value string) *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner {
 	this := CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner{}
 	this.Value = value
-	this.Name = name
 	return &this
 }
 
@@ -76,28 +77,36 @@ func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) SetVal
 	o.Value = v
 }
 
-// GetName returns the Name field value
+// GetName returns the Name field value if set, zero value otherwise.
 func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) GetName() string {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		var ret string
 		return ret
 	}
-
-	return o.Name
+	return *o.Name
 }
 
-// GetNameOk returns a tuple with the Name field value
+// GetNameOk returns a tuple with the Name field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) GetNameOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.Name) {
 		return nil, false
 	}
-	return &o.Name, true
+	return o.Name, true
 }
 
-// SetName sets field value
+// HasName returns a boolean if a field has been set.
+func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) HasName() bool {
+	if o != nil && !IsNil(o.Name) {
+		return true
+	}
+
+	return false
+}
+
+// SetName gets a reference to the given string and assigns it to the Name field.
 func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) SetName(v string) {
-	o.Name = v
+	o.Name = &v
 }
 
 // GetColor returns the Color field value if set, zero value otherwise.
@@ -228,6 +237,38 @@ func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) SetNex
 	o.NextActions = v
 }
 
+// GetExtNextActions returns the ExtNextActions field value if set, zero value otherwise.
+func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) GetExtNextActions() []CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerExtNextActionsInner {
+	if o == nil || IsNil(o.ExtNextActions) {
+		var ret []CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerExtNextActionsInner
+		return ret
+	}
+	return o.ExtNextActions
+}
+
+// GetExtNextActionsOk returns a tuple with the ExtNextActions field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) GetExtNextActionsOk() ([]CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerExtNextActionsInner, bool) {
+	if o == nil || IsNil(o.ExtNextActions) {
+		return nil, false
+	}
+	return o.ExtNextActions, true
+}
+
+// HasExtNextActions returns a boolean if a field has been set.
+func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) HasExtNextActions() bool {
+	if o != nil && !IsNil(o.ExtNextActions) {
+		return true
+	}
+
+	return false
+}
+
+// SetExtNextActions gets a reference to the given []CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerExtNextActionsInner and assigns it to the ExtNextActions field.
+func (o *CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) SetExtNextActions(v []CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInnerExtNextActionsInner) {
+	o.ExtNextActions = v
+}
+
 func (o CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -239,7 +280,9 @@ func (o CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) Marshal
 func (o CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["value"] = o.Value
-	toSerialize["name"] = o.Name
+	if !IsNil(o.Name) {
+		toSerialize["name"] = o.Name
+	}
 	if !IsNil(o.Color) {
 		toSerialize["color"] = o.Color
 	}
@@ -251,6 +294,9 @@ func (o CreateProjectPlanStatusSettingV3RequestSettingCustomStatusInner) ToMap()
 	}
 	if !IsNil(o.NextActions) {
 		toSerialize["nextActions"] = o.NextActions
+	}
+	if !IsNil(o.ExtNextActions) {
+		toSerialize["extNextActions"] = o.ExtNextActions
 	}
 	return toSerialize, nil
 }

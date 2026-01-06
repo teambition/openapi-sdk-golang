@@ -19,6 +19,9 @@ var _ MappedNullable = &SearchUserTasksV3Response{}
 
 // SearchUserTasksV3Response 搜索我的任务响应
 type SearchUserTasksV3Response struct {
+	NextPageToken *string `json:"nextPageToken,omitempty"`
+	// 任务总数
+	TotalSize *float32 `json:"totalSize,omitempty"`
 	// 任务详情集合
 	Result []SearchUserTasksV3ResponseResultInner `json:"result,omitempty"`
 	// 响应状态码
@@ -44,6 +47,70 @@ func NewSearchUserTasksV3Response() *SearchUserTasksV3Response {
 func NewSearchUserTasksV3ResponseWithDefaults() *SearchUserTasksV3Response {
 	this := SearchUserTasksV3Response{}
 	return &this
+}
+
+// GetNextPageToken returns the NextPageToken field value if set, zero value otherwise.
+func (o *SearchUserTasksV3Response) GetNextPageToken() string {
+	if o == nil || IsNil(o.NextPageToken) {
+		var ret string
+		return ret
+	}
+	return *o.NextPageToken
+}
+
+// GetNextPageTokenOk returns a tuple with the NextPageToken field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchUserTasksV3Response) GetNextPageTokenOk() (*string, bool) {
+	if o == nil || IsNil(o.NextPageToken) {
+		return nil, false
+	}
+	return o.NextPageToken, true
+}
+
+// HasNextPageToken returns a boolean if a field has been set.
+func (o *SearchUserTasksV3Response) HasNextPageToken() bool {
+	if o != nil && !IsNil(o.NextPageToken) {
+		return true
+	}
+
+	return false
+}
+
+// SetNextPageToken gets a reference to the given string and assigns it to the NextPageToken field.
+func (o *SearchUserTasksV3Response) SetNextPageToken(v string) {
+	o.NextPageToken = &v
+}
+
+// GetTotalSize returns the TotalSize field value if set, zero value otherwise.
+func (o *SearchUserTasksV3Response) GetTotalSize() float32 {
+	if o == nil || IsNil(o.TotalSize) {
+		var ret float32
+		return ret
+	}
+	return *o.TotalSize
+}
+
+// GetTotalSizeOk returns a tuple with the TotalSize field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchUserTasksV3Response) GetTotalSizeOk() (*float32, bool) {
+	if o == nil || IsNil(o.TotalSize) {
+		return nil, false
+	}
+	return o.TotalSize, true
+}
+
+// HasTotalSize returns a boolean if a field has been set.
+func (o *SearchUserTasksV3Response) HasTotalSize() bool {
+	if o != nil && !IsNil(o.TotalSize) {
+		return true
+	}
+
+	return false
+}
+
+// SetTotalSize gets a reference to the given float32 and assigns it to the TotalSize field.
+func (o *SearchUserTasksV3Response) SetTotalSize(v float32) {
+	o.TotalSize = &v
 }
 
 // GetResult returns the Result field value if set, zero value otherwise.
@@ -184,6 +251,12 @@ func (o SearchUserTasksV3Response) MarshalJSON() ([]byte, error) {
 
 func (o SearchUserTasksV3Response) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.NextPageToken) {
+		toSerialize["nextPageToken"] = o.NextPageToken
+	}
+	if !IsNil(o.TotalSize) {
+		toSerialize["totalSize"] = o.TotalSize
+	}
 	if !IsNil(o.Result) {
 		toSerialize["result"] = o.Result
 	}

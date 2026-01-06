@@ -17,7 +17,7 @@ import (
 // checks if the ListProgramProjectsV3ResponseResultInnerProgram type satisfies the MappedNullable interface at compile time
 var _ MappedNullable = &ListProgramProjectsV3ResponseResultInnerProgram{}
 
-// ListProgramProjectsV3ResponseResultInnerProgram 直属项目集
+// ListProgramProjectsV3ResponseResultInnerProgram 直属项目集(一个项目可能属于多个项目集)
 type ListProgramProjectsV3ResponseResultInnerProgram struct {
 	// 项目集 ID
 	Id *string `json:"id,omitempty"`

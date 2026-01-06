@@ -39,6 +39,12 @@ type GetFileDetailV3ResponseResultInner struct {
 	DownloadUrl *string `json:"downloadUrl,omitempty"`
 	// 预览链接
 	PreviewUrl *string `json:"previewUrl,omitempty"`
+	// 对文件可见的用户ID集合
+	InvolveMembers []string `json:"involveMembers,omitempty"`
+	// 文件可见性
+	Visible *string `json:"visible,omitempty"`
+	// 文件标签ID集合
+	TagIds []string `json:"tagIds,omitempty"`
 }
 
 // NewGetFileDetailV3ResponseResultInner instantiates a new GetFileDetailV3ResponseResultInner object
@@ -378,6 +384,102 @@ func (o *GetFileDetailV3ResponseResultInner) SetPreviewUrl(v string) {
 	o.PreviewUrl = &v
 }
 
+// GetInvolveMembers returns the InvolveMembers field value if set, zero value otherwise.
+func (o *GetFileDetailV3ResponseResultInner) GetInvolveMembers() []string {
+	if o == nil || IsNil(o.InvolveMembers) {
+		var ret []string
+		return ret
+	}
+	return o.InvolveMembers
+}
+
+// GetInvolveMembersOk returns a tuple with the InvolveMembers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetFileDetailV3ResponseResultInner) GetInvolveMembersOk() ([]string, bool) {
+	if o == nil || IsNil(o.InvolveMembers) {
+		return nil, false
+	}
+	return o.InvolveMembers, true
+}
+
+// HasInvolveMembers returns a boolean if a field has been set.
+func (o *GetFileDetailV3ResponseResultInner) HasInvolveMembers() bool {
+	if o != nil && !IsNil(o.InvolveMembers) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvolveMembers gets a reference to the given []string and assigns it to the InvolveMembers field.
+func (o *GetFileDetailV3ResponseResultInner) SetInvolveMembers(v []string) {
+	o.InvolveMembers = v
+}
+
+// GetVisible returns the Visible field value if set, zero value otherwise.
+func (o *GetFileDetailV3ResponseResultInner) GetVisible() string {
+	if o == nil || IsNil(o.Visible) {
+		var ret string
+		return ret
+	}
+	return *o.Visible
+}
+
+// GetVisibleOk returns a tuple with the Visible field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetFileDetailV3ResponseResultInner) GetVisibleOk() (*string, bool) {
+	if o == nil || IsNil(o.Visible) {
+		return nil, false
+	}
+	return o.Visible, true
+}
+
+// HasVisible returns a boolean if a field has been set.
+func (o *GetFileDetailV3ResponseResultInner) HasVisible() bool {
+	if o != nil && !IsNil(o.Visible) {
+		return true
+	}
+
+	return false
+}
+
+// SetVisible gets a reference to the given string and assigns it to the Visible field.
+func (o *GetFileDetailV3ResponseResultInner) SetVisible(v string) {
+	o.Visible = &v
+}
+
+// GetTagIds returns the TagIds field value if set, zero value otherwise.
+func (o *GetFileDetailV3ResponseResultInner) GetTagIds() []string {
+	if o == nil || IsNil(o.TagIds) {
+		var ret []string
+		return ret
+	}
+	return o.TagIds
+}
+
+// GetTagIdsOk returns a tuple with the TagIds field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetFileDetailV3ResponseResultInner) GetTagIdsOk() ([]string, bool) {
+	if o == nil || IsNil(o.TagIds) {
+		return nil, false
+	}
+	return o.TagIds, true
+}
+
+// HasTagIds returns a boolean if a field has been set.
+func (o *GetFileDetailV3ResponseResultInner) HasTagIds() bool {
+	if o != nil && !IsNil(o.TagIds) {
+		return true
+	}
+
+	return false
+}
+
+// SetTagIds gets a reference to the given []string and assigns it to the TagIds field.
+func (o *GetFileDetailV3ResponseResultInner) SetTagIds(v []string) {
+	o.TagIds = v
+}
+
 func (o GetFileDetailV3ResponseResultInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -417,6 +519,15 @@ func (o GetFileDetailV3ResponseResultInner) ToMap() (map[string]interface{}, err
 	}
 	if !IsNil(o.PreviewUrl) {
 		toSerialize["previewUrl"] = o.PreviewUrl
+	}
+	if !IsNil(o.InvolveMembers) {
+		toSerialize["involveMembers"] = o.InvolveMembers
+	}
+	if !IsNil(o.Visible) {
+		toSerialize["visible"] = o.Visible
+	}
+	if !IsNil(o.TagIds) {
+		toSerialize["tagIds"] = o.TagIds
 	}
 	return toSerialize, nil
 }

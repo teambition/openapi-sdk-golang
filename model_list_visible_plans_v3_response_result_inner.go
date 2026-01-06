@@ -49,7 +49,9 @@ type ListVisiblePlansV3ResponseResultInner struct {
 	PublishTime *string `json:"publishTime,omitempty"`
 	// 发布者ID
 	PublishUserId *string `json:"publishUserId,omitempty"`
-	ApprovalInfo *ListVisiblePlansV3ResponseResultInnerApprovalInfo `json:"approvalInfo,omitempty"`
+	ApprovalInfo *GetPlanV3ResponseResultApprovalInfo `json:"approvalInfo,omitempty"`
+	// 自定义字段
+	Customfields []map[string]interface{} `json:"customfields,omitempty"`
 	LatestOnlineVersion *GetPlanV3ResponseResultLatestOnlineVersion `json:"latestOnlineVersion,omitempty"`
 	LatestVersion *GetPlanV3ResponseResultLatestVersion `json:"latestVersion,omitempty"`
 }
@@ -552,9 +554,9 @@ func (o *ListVisiblePlansV3ResponseResultInner) SetPublishUserId(v string) {
 }
 
 // GetApprovalInfo returns the ApprovalInfo field value if set, zero value otherwise.
-func (o *ListVisiblePlansV3ResponseResultInner) GetApprovalInfo() ListVisiblePlansV3ResponseResultInnerApprovalInfo {
+func (o *ListVisiblePlansV3ResponseResultInner) GetApprovalInfo() GetPlanV3ResponseResultApprovalInfo {
 	if o == nil || IsNil(o.ApprovalInfo) {
-		var ret ListVisiblePlansV3ResponseResultInnerApprovalInfo
+		var ret GetPlanV3ResponseResultApprovalInfo
 		return ret
 	}
 	return *o.ApprovalInfo
@@ -562,7 +564,7 @@ func (o *ListVisiblePlansV3ResponseResultInner) GetApprovalInfo() ListVisiblePla
 
 // GetApprovalInfoOk returns a tuple with the ApprovalInfo field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListVisiblePlansV3ResponseResultInner) GetApprovalInfoOk() (*ListVisiblePlansV3ResponseResultInnerApprovalInfo, bool) {
+func (o *ListVisiblePlansV3ResponseResultInner) GetApprovalInfoOk() (*GetPlanV3ResponseResultApprovalInfo, bool) {
 	if o == nil || IsNil(o.ApprovalInfo) {
 		return nil, false
 	}
@@ -578,9 +580,41 @@ func (o *ListVisiblePlansV3ResponseResultInner) HasApprovalInfo() bool {
 	return false
 }
 
-// SetApprovalInfo gets a reference to the given ListVisiblePlansV3ResponseResultInnerApprovalInfo and assigns it to the ApprovalInfo field.
-func (o *ListVisiblePlansV3ResponseResultInner) SetApprovalInfo(v ListVisiblePlansV3ResponseResultInnerApprovalInfo) {
+// SetApprovalInfo gets a reference to the given GetPlanV3ResponseResultApprovalInfo and assigns it to the ApprovalInfo field.
+func (o *ListVisiblePlansV3ResponseResultInner) SetApprovalInfo(v GetPlanV3ResponseResultApprovalInfo) {
 	o.ApprovalInfo = &v
+}
+
+// GetCustomfields returns the Customfields field value if set, zero value otherwise.
+func (o *ListVisiblePlansV3ResponseResultInner) GetCustomfields() []map[string]interface{} {
+	if o == nil || IsNil(o.Customfields) {
+		var ret []map[string]interface{}
+		return ret
+	}
+	return o.Customfields
+}
+
+// GetCustomfieldsOk returns a tuple with the Customfields field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListVisiblePlansV3ResponseResultInner) GetCustomfieldsOk() ([]map[string]interface{}, bool) {
+	if o == nil || IsNil(o.Customfields) {
+		return nil, false
+	}
+	return o.Customfields, true
+}
+
+// HasCustomfields returns a boolean if a field has been set.
+func (o *ListVisiblePlansV3ResponseResultInner) HasCustomfields() bool {
+	if o != nil && !IsNil(o.Customfields) {
+		return true
+	}
+
+	return false
+}
+
+// SetCustomfields gets a reference to the given []map[string]interface{} and assigns it to the Customfields field.
+func (o *ListVisiblePlansV3ResponseResultInner) SetCustomfields(v []map[string]interface{}) {
+	o.Customfields = v
 }
 
 // GetLatestOnlineVersion returns the LatestOnlineVersion field value if set, zero value otherwise.
@@ -704,6 +738,9 @@ func (o ListVisiblePlansV3ResponseResultInner) ToMap() (map[string]interface{}, 
 	}
 	if !IsNil(o.ApprovalInfo) {
 		toSerialize["approvalInfo"] = o.ApprovalInfo
+	}
+	if !IsNil(o.Customfields) {
+		toSerialize["customfields"] = o.Customfields
 	}
 	if !IsNil(o.LatestOnlineVersion) {
 		toSerialize["latestOnlineVersion"] = o.LatestOnlineVersion

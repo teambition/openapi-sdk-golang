@@ -25,12 +25,14 @@ type SearchTaskflowNodesResponseResultInner struct {
 	Name *string `json:"name,omitempty"`
 	// 前置节点ID列表
 	PrevIds []string `json:"prevIds,omitempty"`
-	// 工作流状态ID
+	// 节点对应的工作流状态ID
 	TfsId *string `json:"tfsId,omitempty"`
 	// 节点完成类型:  oneAssignee - 一人完成（或签） allAssignee - 所有人完成（会签） allAssigneeDoneAsOrder - 所有审批人按顺序完成（串签） 
 	DoneType *string `json:"doneType,omitempty"`
 	// 节点是否自动完成
 	IsAutoFinish *bool `json:"isAutoFinish,omitempty"`
+	// 节点子任务全部完成才允许流转
+	RequireAllSubtaskDone *bool `json:"requireAllSubtaskDone,omitempty"`
 	// 节点操作相关权限
 	Permissions []SearchFormRecordProcessNodesV3ResponseResultInnerPermissionsInner `json:"permissions,omitempty"`
 }
@@ -244,6 +246,38 @@ func (o *SearchTaskflowNodesResponseResultInner) SetIsAutoFinish(v bool) {
 	o.IsAutoFinish = &v
 }
 
+// GetRequireAllSubtaskDone returns the RequireAllSubtaskDone field value if set, zero value otherwise.
+func (o *SearchTaskflowNodesResponseResultInner) GetRequireAllSubtaskDone() bool {
+	if o == nil || IsNil(o.RequireAllSubtaskDone) {
+		var ret bool
+		return ret
+	}
+	return *o.RequireAllSubtaskDone
+}
+
+// GetRequireAllSubtaskDoneOk returns a tuple with the RequireAllSubtaskDone field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchTaskflowNodesResponseResultInner) GetRequireAllSubtaskDoneOk() (*bool, bool) {
+	if o == nil || IsNil(o.RequireAllSubtaskDone) {
+		return nil, false
+	}
+	return o.RequireAllSubtaskDone, true
+}
+
+// HasRequireAllSubtaskDone returns a boolean if a field has been set.
+func (o *SearchTaskflowNodesResponseResultInner) HasRequireAllSubtaskDone() bool {
+	if o != nil && !IsNil(o.RequireAllSubtaskDone) {
+		return true
+	}
+
+	return false
+}
+
+// SetRequireAllSubtaskDone gets a reference to the given bool and assigns it to the RequireAllSubtaskDone field.
+func (o *SearchTaskflowNodesResponseResultInner) SetRequireAllSubtaskDone(v bool) {
+	o.RequireAllSubtaskDone = &v
+}
+
 // GetPermissions returns the Permissions field value if set, zero value otherwise.
 func (o *SearchTaskflowNodesResponseResultInner) GetPermissions() []SearchFormRecordProcessNodesV3ResponseResultInnerPermissionsInner {
 	if o == nil || IsNil(o.Permissions) {
@@ -303,6 +337,9 @@ func (o SearchTaskflowNodesResponseResultInner) ToMap() (map[string]interface{},
 	}
 	if !IsNil(o.IsAutoFinish) {
 		toSerialize["isAutoFinish"] = o.IsAutoFinish
+	}
+	if !IsNil(o.RequireAllSubtaskDone) {
+		toSerialize["requireAllSubtaskDone"] = o.RequireAllSubtaskDone
 	}
 	if !IsNil(o.Permissions) {
 		toSerialize["permissions"] = o.Permissions

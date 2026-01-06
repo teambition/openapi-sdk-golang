@@ -58,7 +58,7 @@ type CreateTaskV3ResponseResult struct {
 	// 任务隐私性，'involves'表达仅参与者可见; 'members'表达项目成员可见
 	Visible *string `json:"visible,omitempty"`
 	// 任务数字ID
-	UniqueId *string `json:"uniqueId,omitempty"`
+	UniqueId *int32 `json:"uniqueId,omitempty"`
 	// 任务开始时间(UTC)
 	StartDate *string `json:"startDate,omitempty"`
 	// 任务截止时间(UTC)
@@ -701,9 +701,9 @@ func (o *CreateTaskV3ResponseResult) SetVisible(v string) {
 }
 
 // GetUniqueId returns the UniqueId field value if set, zero value otherwise.
-func (o *CreateTaskV3ResponseResult) GetUniqueId() string {
+func (o *CreateTaskV3ResponseResult) GetUniqueId() int32 {
 	if o == nil || IsNil(o.UniqueId) {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.UniqueId
@@ -711,7 +711,7 @@ func (o *CreateTaskV3ResponseResult) GetUniqueId() string {
 
 // GetUniqueIdOk returns a tuple with the UniqueId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *CreateTaskV3ResponseResult) GetUniqueIdOk() (*string, bool) {
+func (o *CreateTaskV3ResponseResult) GetUniqueIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.UniqueId) {
 		return nil, false
 	}
@@ -727,8 +727,8 @@ func (o *CreateTaskV3ResponseResult) HasUniqueId() bool {
 	return false
 }
 
-// SetUniqueId gets a reference to the given string and assigns it to the UniqueId field.
-func (o *CreateTaskV3ResponseResult) SetUniqueId(v string) {
+// SetUniqueId gets a reference to the given int32 and assigns it to the UniqueId field.
+func (o *CreateTaskV3ResponseResult) SetUniqueId(v int32) {
 	o.UniqueId = &v
 }
 

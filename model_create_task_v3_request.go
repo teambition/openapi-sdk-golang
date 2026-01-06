@@ -22,8 +22,10 @@ var _ MappedNullable = &CreateTaskV3Request{}
 type CreateTaskV3Request struct {
 	// 项目id
 	ProjectId *string `json:"projectId,omitempty"`
-	// 项目名称（取通过项目名匹配到的第一个项目，projectId、projectName至少传一个，与projectId同时传入时优先用projectId）
+	// 项目名称（projectId、projectName，projectUniqueIdPrefix至少传一个，优先用projectId）
 	ProjectName *string `json:"projectName,omitempty"`
+	// 任务编号前缀，即项目编号（projectId、projectName，projectUniqueIdPrefix至少传一个，优先用projectId）
+	ProjectUniqueIdPrefix *string `json:"projectUniqueIdPrefix,omitempty"`
 	// 任务标题
 	Content *string `json:"content,omitempty"`
 	// 执行者id
@@ -154,6 +156,38 @@ func (o *CreateTaskV3Request) HasProjectName() bool {
 // SetProjectName gets a reference to the given string and assigns it to the ProjectName field.
 func (o *CreateTaskV3Request) SetProjectName(v string) {
 	o.ProjectName = &v
+}
+
+// GetProjectUniqueIdPrefix returns the ProjectUniqueIdPrefix field value if set, zero value otherwise.
+func (o *CreateTaskV3Request) GetProjectUniqueIdPrefix() string {
+	if o == nil || IsNil(o.ProjectUniqueIdPrefix) {
+		var ret string
+		return ret
+	}
+	return *o.ProjectUniqueIdPrefix
+}
+
+// GetProjectUniqueIdPrefixOk returns a tuple with the ProjectUniqueIdPrefix field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateTaskV3Request) GetProjectUniqueIdPrefixOk() (*string, bool) {
+	if o == nil || IsNil(o.ProjectUniqueIdPrefix) {
+		return nil, false
+	}
+	return o.ProjectUniqueIdPrefix, true
+}
+
+// HasProjectUniqueIdPrefix returns a boolean if a field has been set.
+func (o *CreateTaskV3Request) HasProjectUniqueIdPrefix() bool {
+	if o != nil && !IsNil(o.ProjectUniqueIdPrefix) {
+		return true
+	}
+
+	return false
+}
+
+// SetProjectUniqueIdPrefix gets a reference to the given string and assigns it to the ProjectUniqueIdPrefix field.
+func (o *CreateTaskV3Request) SetProjectUniqueIdPrefix(v string) {
+	o.ProjectUniqueIdPrefix = &v
 }
 
 // GetContent returns the Content field value if set, zero value otherwise.
@@ -971,6 +1005,9 @@ func (o CreateTaskV3Request) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ProjectName) {
 		toSerialize["projectName"] = o.ProjectName
+	}
+	if !IsNil(o.ProjectUniqueIdPrefix) {
+		toSerialize["projectUniqueIdPrefix"] = o.ProjectUniqueIdPrefix
 	}
 	if !IsNil(o.Content) {
 		toSerialize["content"] = o.Content

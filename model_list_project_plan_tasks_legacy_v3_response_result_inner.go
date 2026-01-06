@@ -23,6 +23,8 @@ type ListProjectPlanTasksLegacyV3ResponseResultInner struct {
 	Id *string `json:"id,omitempty"`
 	// 任务标题
 	Content *string `json:"content,omitempty"`
+	// 任务标题
+	RealTaskId *string `json:"realTaskId,omitempty"`
 	// 任务备注
 	Note *string `json:"note,omitempty"`
 	// 项目ID
@@ -58,7 +60,7 @@ type ListProjectPlanTasksLegacyV3ResponseResultInner struct {
 	// 任务隐私性，'involves'表达仅参与者可见; 'members'表达项目成员可见
 	Visible *string `json:"visible,omitempty"`
 	// 任务数字ID
-	UniqueId *string `json:"uniqueId,omitempty"`
+	UniqueId *int32 `json:"uniqueId,omitempty"`
 	// 任务开始时间(UTC)
 	StartDate *string `json:"startDate,omitempty"`
 	// 任务截止时间(UTC)
@@ -168,6 +170,38 @@ func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) HasContent() bool {
 // SetContent gets a reference to the given string and assigns it to the Content field.
 func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) SetContent(v string) {
 	o.Content = &v
+}
+
+// GetRealTaskId returns the RealTaskId field value if set, zero value otherwise.
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetRealTaskId() string {
+	if o == nil || IsNil(o.RealTaskId) {
+		var ret string
+		return ret
+	}
+	return *o.RealTaskId
+}
+
+// GetRealTaskIdOk returns a tuple with the RealTaskId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetRealTaskIdOk() (*string, bool) {
+	if o == nil || IsNil(o.RealTaskId) {
+		return nil, false
+	}
+	return o.RealTaskId, true
+}
+
+// HasRealTaskId returns a boolean if a field has been set.
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) HasRealTaskId() bool {
+	if o != nil && !IsNil(o.RealTaskId) {
+		return true
+	}
+
+	return false
+}
+
+// SetRealTaskId gets a reference to the given string and assigns it to the RealTaskId field.
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) SetRealTaskId(v string) {
+	o.RealTaskId = &v
 }
 
 // GetNote returns the Note field value if set, zero value otherwise.
@@ -715,9 +749,9 @@ func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) SetVisible(v string) {
 }
 
 // GetUniqueId returns the UniqueId field value if set, zero value otherwise.
-func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetUniqueId() string {
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetUniqueId() int32 {
 	if o == nil || IsNil(o.UniqueId) {
-		var ret string
+		var ret int32
 		return ret
 	}
 	return *o.UniqueId
@@ -725,7 +759,7 @@ func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetUniqueId() string {
 
 // GetUniqueIdOk returns a tuple with the UniqueId field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetUniqueIdOk() (*string, bool) {
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) GetUniqueIdOk() (*int32, bool) {
 	if o == nil || IsNil(o.UniqueId) {
 		return nil, false
 	}
@@ -741,8 +775,8 @@ func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) HasUniqueId() bool {
 	return false
 }
 
-// SetUniqueId gets a reference to the given string and assigns it to the UniqueId field.
-func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) SetUniqueId(v string) {
+// SetUniqueId gets a reference to the given int32 and assigns it to the UniqueId field.
+func (o *ListProjectPlanTasksLegacyV3ResponseResultInner) SetUniqueId(v int32) {
 	o.UniqueId = &v
 }
 
@@ -1209,6 +1243,9 @@ func (o ListProjectPlanTasksLegacyV3ResponseResultInner) ToMap() (map[string]int
 	}
 	if !IsNil(o.Content) {
 		toSerialize["content"] = o.Content
+	}
+	if !IsNil(o.RealTaskId) {
+		toSerialize["realTaskId"] = o.RealTaskId
 	}
 	if !IsNil(o.Note) {
 		toSerialize["note"] = o.Note

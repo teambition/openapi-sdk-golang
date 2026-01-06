@@ -30,7 +30,7 @@ type GetProjectPlanStatusSettingV3ResponseResult struct {
 	// 审批链接
 	ApprovalUrl *string `json:"approvalUrl,omitempty"`
 	// 自定义状态列表
-	CustomStatus []GetPlanStatusV3ResponseResult `json:"customStatus,omitempty"`
+	CustomStatus []GetProjectPlanStatusSettingV3ResponseResultCustomStatusInner `json:"customStatus,omitempty"`
 }
 
 // NewGetProjectPlanStatusSettingV3ResponseResult instantiates a new GetProjectPlanStatusSettingV3ResponseResult object
@@ -211,9 +211,9 @@ func (o *GetProjectPlanStatusSettingV3ResponseResult) SetApprovalUrl(v string) {
 }
 
 // GetCustomStatus returns the CustomStatus field value if set, zero value otherwise.
-func (o *GetProjectPlanStatusSettingV3ResponseResult) GetCustomStatus() []GetPlanStatusV3ResponseResult {
+func (o *GetProjectPlanStatusSettingV3ResponseResult) GetCustomStatus() []GetProjectPlanStatusSettingV3ResponseResultCustomStatusInner {
 	if o == nil || IsNil(o.CustomStatus) {
-		var ret []GetPlanStatusV3ResponseResult
+		var ret []GetProjectPlanStatusSettingV3ResponseResultCustomStatusInner
 		return ret
 	}
 	return o.CustomStatus
@@ -221,7 +221,7 @@ func (o *GetProjectPlanStatusSettingV3ResponseResult) GetCustomStatus() []GetPla
 
 // GetCustomStatusOk returns a tuple with the CustomStatus field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *GetProjectPlanStatusSettingV3ResponseResult) GetCustomStatusOk() ([]GetPlanStatusV3ResponseResult, bool) {
+func (o *GetProjectPlanStatusSettingV3ResponseResult) GetCustomStatusOk() ([]GetProjectPlanStatusSettingV3ResponseResultCustomStatusInner, bool) {
 	if o == nil || IsNil(o.CustomStatus) {
 		return nil, false
 	}
@@ -237,8 +237,8 @@ func (o *GetProjectPlanStatusSettingV3ResponseResult) HasCustomStatus() bool {
 	return false
 }
 
-// SetCustomStatus gets a reference to the given []GetPlanStatusV3ResponseResult and assigns it to the CustomStatus field.
-func (o *GetProjectPlanStatusSettingV3ResponseResult) SetCustomStatus(v []GetPlanStatusV3ResponseResult) {
+// SetCustomStatus gets a reference to the given []GetProjectPlanStatusSettingV3ResponseResultCustomStatusInner and assigns it to the CustomStatus field.
+func (o *GetProjectPlanStatusSettingV3ResponseResult) SetCustomStatus(v []GetProjectPlanStatusSettingV3ResponseResultCustomStatusInner) {
 	o.CustomStatus = v
 }
 

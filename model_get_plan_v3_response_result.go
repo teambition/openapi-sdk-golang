@@ -25,6 +25,8 @@ type GetPlanV3ResponseResult struct {
 	OrganizationId *string `json:"organizationId,omitempty"`
 	// 项目ID
 	ProjectId *string `json:"projectId,omitempty"`
+	// 虚拟项目ID
+	VirtualProjectId *string `json:"virtualProjectId,omitempty"`
 	// 计划标题
 	Subject *string `json:"subject,omitempty"`
 	// 计划开始时间(UTC)
@@ -47,6 +49,7 @@ type GetPlanV3ResponseResult struct {
 	PublishTime *string `json:"publishTime,omitempty"`
 	// 发布者ID
 	PublishUserId *string `json:"publishUserId,omitempty"`
+	ChangeRule *GetPlanV3ResponseResultChangeRule `json:"changeRule,omitempty"`
 	ApprovalInfo *GetPlanV3ResponseResultApprovalInfo `json:"approvalInfo,omitempty"`
 	LatestOnlineVersion *GetPlanV3ResponseResultLatestOnlineVersion `json:"latestOnlineVersion,omitempty"`
 	LatestVersion *GetPlanV3ResponseResultLatestVersion `json:"latestVersion,omitempty"`
@@ -163,6 +166,38 @@ func (o *GetPlanV3ResponseResult) HasProjectId() bool {
 // SetProjectId gets a reference to the given string and assigns it to the ProjectId field.
 func (o *GetPlanV3ResponseResult) SetProjectId(v string) {
 	o.ProjectId = &v
+}
+
+// GetVirtualProjectId returns the VirtualProjectId field value if set, zero value otherwise.
+func (o *GetPlanV3ResponseResult) GetVirtualProjectId() string {
+	if o == nil || IsNil(o.VirtualProjectId) {
+		var ret string
+		return ret
+	}
+	return *o.VirtualProjectId
+}
+
+// GetVirtualProjectIdOk returns a tuple with the VirtualProjectId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetPlanV3ResponseResult) GetVirtualProjectIdOk() (*string, bool) {
+	if o == nil || IsNil(o.VirtualProjectId) {
+		return nil, false
+	}
+	return o.VirtualProjectId, true
+}
+
+// HasVirtualProjectId returns a boolean if a field has been set.
+func (o *GetPlanV3ResponseResult) HasVirtualProjectId() bool {
+	if o != nil && !IsNil(o.VirtualProjectId) {
+		return true
+	}
+
+	return false
+}
+
+// SetVirtualProjectId gets a reference to the given string and assigns it to the VirtualProjectId field.
+func (o *GetPlanV3ResponseResult) SetVirtualProjectId(v string) {
+	o.VirtualProjectId = &v
 }
 
 // GetSubject returns the Subject field value if set, zero value otherwise.
@@ -517,6 +552,38 @@ func (o *GetPlanV3ResponseResult) SetPublishUserId(v string) {
 	o.PublishUserId = &v
 }
 
+// GetChangeRule returns the ChangeRule field value if set, zero value otherwise.
+func (o *GetPlanV3ResponseResult) GetChangeRule() GetPlanV3ResponseResultChangeRule {
+	if o == nil || IsNil(o.ChangeRule) {
+		var ret GetPlanV3ResponseResultChangeRule
+		return ret
+	}
+	return *o.ChangeRule
+}
+
+// GetChangeRuleOk returns a tuple with the ChangeRule field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetPlanV3ResponseResult) GetChangeRuleOk() (*GetPlanV3ResponseResultChangeRule, bool) {
+	if o == nil || IsNil(o.ChangeRule) {
+		return nil, false
+	}
+	return o.ChangeRule, true
+}
+
+// HasChangeRule returns a boolean if a field has been set.
+func (o *GetPlanV3ResponseResult) HasChangeRule() bool {
+	if o != nil && !IsNil(o.ChangeRule) {
+		return true
+	}
+
+	return false
+}
+
+// SetChangeRule gets a reference to the given GetPlanV3ResponseResultChangeRule and assigns it to the ChangeRule field.
+func (o *GetPlanV3ResponseResult) SetChangeRule(v GetPlanV3ResponseResultChangeRule) {
+	o.ChangeRule = &v
+}
+
 // GetApprovalInfo returns the ApprovalInfo field value if set, zero value otherwise.
 func (o *GetPlanV3ResponseResult) GetApprovalInfo() GetPlanV3ResponseResultApprovalInfo {
 	if o == nil || IsNil(o.ApprovalInfo) {
@@ -632,6 +699,9 @@ func (o GetPlanV3ResponseResult) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ProjectId) {
 		toSerialize["projectId"] = o.ProjectId
 	}
+	if !IsNil(o.VirtualProjectId) {
+		toSerialize["virtualProjectId"] = o.VirtualProjectId
+	}
 	if !IsNil(o.Subject) {
 		toSerialize["subject"] = o.Subject
 	}
@@ -664,6 +734,9 @@ func (o GetPlanV3ResponseResult) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.PublishUserId) {
 		toSerialize["publishUserId"] = o.PublishUserId
+	}
+	if !IsNil(o.ChangeRule) {
+		toSerialize["changeRule"] = o.ChangeRule
 	}
 	if !IsNil(o.ApprovalInfo) {
 		toSerialize["approvalInfo"] = o.ApprovalInfo

@@ -26,6 +26,8 @@ type SearchProjectCustomFiledsV3ResponseResultInner struct {
 	Name *string `json:"name,omitempty"`
 	// 字段类型
 	Type *string `json:"type,omitempty"`
+	// 字段子类型, 用于细分需求分类/缺陷分类等场景 - bug 缺陷分类 (type=commongroup) - story 需求分类 (type=commongroup) 
+	Subtype *string `json:"subtype,omitempty"`
 	// 项目ID
 	BoundToObjectId *string `json:"boundToObjectId,omitempty"`
 	// 绑定对象类型
@@ -35,7 +37,7 @@ type SearchProjectCustomFiledsV3ResponseResultInner struct {
 	// 创建人ID
 	CreatorId *string `json:"creatorId,omitempty"`
 	// 如果是单选或多选字段，这里是可选项的值
-	Choices []SearchOrgCustomfiledV3ResponseResultInnerChoicesInner `json:"choices,omitempty"`
+	Choices []SearchProjectCustomFiledsV3ResponseResultInnerChoicesInner `json:"choices,omitempty"`
 	// 创建时间
 	Created *time.Time `json:"created,omitempty"`
 	// 字段内容
@@ -154,6 +156,38 @@ func (o *SearchProjectCustomFiledsV3ResponseResultInner) HasType() bool {
 // SetType gets a reference to the given string and assigns it to the Type field.
 func (o *SearchProjectCustomFiledsV3ResponseResultInner) SetType(v string) {
 	o.Type = &v
+}
+
+// GetSubtype returns the Subtype field value if set, zero value otherwise.
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetSubtype() string {
+	if o == nil || IsNil(o.Subtype) {
+		var ret string
+		return ret
+	}
+	return *o.Subtype
+}
+
+// GetSubtypeOk returns a tuple with the Subtype field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetSubtypeOk() (*string, bool) {
+	if o == nil || IsNil(o.Subtype) {
+		return nil, false
+	}
+	return o.Subtype, true
+}
+
+// HasSubtype returns a boolean if a field has been set.
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) HasSubtype() bool {
+	if o != nil && !IsNil(o.Subtype) {
+		return true
+	}
+
+	return false
+}
+
+// SetSubtype gets a reference to the given string and assigns it to the Subtype field.
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) SetSubtype(v string) {
+	o.Subtype = &v
 }
 
 // GetBoundToObjectId returns the BoundToObjectId field value if set, zero value otherwise.
@@ -285,9 +319,9 @@ func (o *SearchProjectCustomFiledsV3ResponseResultInner) SetCreatorId(v string) 
 }
 
 // GetChoices returns the Choices field value if set, zero value otherwise.
-func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetChoices() []SearchOrgCustomfiledV3ResponseResultInnerChoicesInner {
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetChoices() []SearchProjectCustomFiledsV3ResponseResultInnerChoicesInner {
 	if o == nil || IsNil(o.Choices) {
-		var ret []SearchOrgCustomfiledV3ResponseResultInnerChoicesInner
+		var ret []SearchProjectCustomFiledsV3ResponseResultInnerChoicesInner
 		return ret
 	}
 	return o.Choices
@@ -295,7 +329,7 @@ func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetChoices() []SearchOr
 
 // GetChoicesOk returns a tuple with the Choices field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetChoicesOk() ([]SearchOrgCustomfiledV3ResponseResultInnerChoicesInner, bool) {
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) GetChoicesOk() ([]SearchProjectCustomFiledsV3ResponseResultInnerChoicesInner, bool) {
 	if o == nil || IsNil(o.Choices) {
 		return nil, false
 	}
@@ -311,8 +345,8 @@ func (o *SearchProjectCustomFiledsV3ResponseResultInner) HasChoices() bool {
 	return false
 }
 
-// SetChoices gets a reference to the given []SearchOrgCustomfiledV3ResponseResultInnerChoicesInner and assigns it to the Choices field.
-func (o *SearchProjectCustomFiledsV3ResponseResultInner) SetChoices(v []SearchOrgCustomfiledV3ResponseResultInnerChoicesInner) {
+// SetChoices gets a reference to the given []SearchProjectCustomFiledsV3ResponseResultInnerChoicesInner and assigns it to the Choices field.
+func (o *SearchProjectCustomFiledsV3ResponseResultInner) SetChoices(v []SearchProjectCustomFiledsV3ResponseResultInnerChoicesInner) {
 	o.Choices = v
 }
 
@@ -430,6 +464,9 @@ func (o SearchProjectCustomFiledsV3ResponseResultInner) ToMap() (map[string]inte
 	}
 	if !IsNil(o.Type) {
 		toSerialize["type"] = o.Type
+	}
+	if !IsNil(o.Subtype) {
+		toSerialize["subtype"] = o.Subtype
 	}
 	if !IsNil(o.BoundToObjectId) {
 		toSerialize["boundToObjectId"] = o.BoundToObjectId

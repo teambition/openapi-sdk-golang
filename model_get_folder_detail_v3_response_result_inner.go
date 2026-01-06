@@ -32,6 +32,10 @@ type GetFolderDetailV3ResponseResultInner struct {
 	Created *time.Time `json:"created,omitempty"`
 	// 更新时间(UTC)
 	Updated *time.Time `json:"updated,omitempty"`
+	// 参与者用户ID集合
+	InvolveMembers []string `json:"involveMembers,omitempty"`
+	// 隐私性，members 是项目成员可访问, involves 仅参与者可访问
+	Visible *string `json:"visible,omitempty"`
 }
 
 // NewGetFolderDetailV3ResponseResultInner instantiates a new GetFolderDetailV3ResponseResultInner object
@@ -243,6 +247,70 @@ func (o *GetFolderDetailV3ResponseResultInner) SetUpdated(v time.Time) {
 	o.Updated = &v
 }
 
+// GetInvolveMembers returns the InvolveMembers field value if set, zero value otherwise.
+func (o *GetFolderDetailV3ResponseResultInner) GetInvolveMembers() []string {
+	if o == nil || IsNil(o.InvolveMembers) {
+		var ret []string
+		return ret
+	}
+	return o.InvolveMembers
+}
+
+// GetInvolveMembersOk returns a tuple with the InvolveMembers field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetFolderDetailV3ResponseResultInner) GetInvolveMembersOk() ([]string, bool) {
+	if o == nil || IsNil(o.InvolveMembers) {
+		return nil, false
+	}
+	return o.InvolveMembers, true
+}
+
+// HasInvolveMembers returns a boolean if a field has been set.
+func (o *GetFolderDetailV3ResponseResultInner) HasInvolveMembers() bool {
+	if o != nil && !IsNil(o.InvolveMembers) {
+		return true
+	}
+
+	return false
+}
+
+// SetInvolveMembers gets a reference to the given []string and assigns it to the InvolveMembers field.
+func (o *GetFolderDetailV3ResponseResultInner) SetInvolveMembers(v []string) {
+	o.InvolveMembers = v
+}
+
+// GetVisible returns the Visible field value if set, zero value otherwise.
+func (o *GetFolderDetailV3ResponseResultInner) GetVisible() string {
+	if o == nil || IsNil(o.Visible) {
+		var ret string
+		return ret
+	}
+	return *o.Visible
+}
+
+// GetVisibleOk returns a tuple with the Visible field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetFolderDetailV3ResponseResultInner) GetVisibleOk() (*string, bool) {
+	if o == nil || IsNil(o.Visible) {
+		return nil, false
+	}
+	return o.Visible, true
+}
+
+// HasVisible returns a boolean if a field has been set.
+func (o *GetFolderDetailV3ResponseResultInner) HasVisible() bool {
+	if o != nil && !IsNil(o.Visible) {
+		return true
+	}
+
+	return false
+}
+
+// SetVisible gets a reference to the given string and assigns it to the Visible field.
+func (o *GetFolderDetailV3ResponseResultInner) SetVisible(v string) {
+	o.Visible = &v
+}
+
 func (o GetFolderDetailV3ResponseResultInner) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -270,6 +338,12 @@ func (o GetFolderDetailV3ResponseResultInner) ToMap() (map[string]interface{}, e
 	}
 	if !IsNil(o.Updated) {
 		toSerialize["updated"] = o.Updated
+	}
+	if !IsNil(o.InvolveMembers) {
+		toSerialize["involveMembers"] = o.InvolveMembers
+	}
+	if !IsNil(o.Visible) {
+		toSerialize["visible"] = o.Visible
 	}
 	return toSerialize, nil
 }

@@ -23,12 +23,14 @@ type ListFilesV3ResponseResultCollectionsInner struct {
 	Id *string `json:"id,omitempty"`
 	// 创建者ID
 	CreatorId *string `json:"creatorId,omitempty"`
-	// 上级文件夹ID
+	// 父文件夹ID
 	ParentId *string `json:"parentId,omitempty"`
 	// 祖先文件夹ID列表
 	AncestorIds []string `json:"ancestorIds,omitempty"`
 	// 文件路径
 	PrefixPath *string `json:"prefixPath,omitempty"`
+	// 文件是否归档
+	IsArchived *bool `json:"isArchived,omitempty"`
 	// 文件夹名
 	Title *string `json:"title,omitempty"`
 	// 创建时间
@@ -214,6 +216,38 @@ func (o *ListFilesV3ResponseResultCollectionsInner) SetPrefixPath(v string) {
 	o.PrefixPath = &v
 }
 
+// GetIsArchived returns the IsArchived field value if set, zero value otherwise.
+func (o *ListFilesV3ResponseResultCollectionsInner) GetIsArchived() bool {
+	if o == nil || IsNil(o.IsArchived) {
+		var ret bool
+		return ret
+	}
+	return *o.IsArchived
+}
+
+// GetIsArchivedOk returns a tuple with the IsArchived field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ListFilesV3ResponseResultCollectionsInner) GetIsArchivedOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsArchived) {
+		return nil, false
+	}
+	return o.IsArchived, true
+}
+
+// HasIsArchived returns a boolean if a field has been set.
+func (o *ListFilesV3ResponseResultCollectionsInner) HasIsArchived() bool {
+	if o != nil && !IsNil(o.IsArchived) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsArchived gets a reference to the given bool and assigns it to the IsArchived field.
+func (o *ListFilesV3ResponseResultCollectionsInner) SetIsArchived(v bool) {
+	o.IsArchived = &v
+}
+
 // GetTitle returns the Title field value if set, zero value otherwise.
 func (o *ListFilesV3ResponseResultCollectionsInner) GetTitle() string {
 	if o == nil || IsNil(o.Title) {
@@ -334,6 +368,9 @@ func (o ListFilesV3ResponseResultCollectionsInner) ToMap() (map[string]interface
 	}
 	if !IsNil(o.PrefixPath) {
 		toSerialize["prefixPath"] = o.PrefixPath
+	}
+	if !IsNil(o.IsArchived) {
+		toSerialize["isArchived"] = o.IsArchived
 	}
 	if !IsNil(o.Title) {
 		toSerialize["title"] = o.Title

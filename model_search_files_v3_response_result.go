@@ -19,12 +19,12 @@ var _ MappedNullable = &SearchFilesV3ResponseResult{}
 
 // SearchFilesV3ResponseResult struct for SearchFilesV3ResponseResult
 type SearchFilesV3ResponseResult struct {
+	// 文件夹列表
+	Collections []ListFilesV3ResponseResultCollectionsInner `json:"collections,omitempty"`
+	// 文件列表
+	Works []ListFilesV3ResponseResultWorksInner `json:"works,omitempty"`
 	// 分页标
 	NextPageToken *string `json:"nextPageToken,omitempty"`
-	// 文件夹列表
-	Collections []SearchFilesV3ResponseResultCollectionsInner `json:"collections,omitempty"`
-	// 文件列表
-	Works []CreateFileV3ResponseResultInner `json:"works,omitempty"`
 }
 
 // NewSearchFilesV3ResponseResult instantiates a new SearchFilesV3ResponseResult object
@@ -42,6 +42,70 @@ func NewSearchFilesV3ResponseResult() *SearchFilesV3ResponseResult {
 func NewSearchFilesV3ResponseResultWithDefaults() *SearchFilesV3ResponseResult {
 	this := SearchFilesV3ResponseResult{}
 	return &this
+}
+
+// GetCollections returns the Collections field value if set, zero value otherwise.
+func (o *SearchFilesV3ResponseResult) GetCollections() []ListFilesV3ResponseResultCollectionsInner {
+	if o == nil || IsNil(o.Collections) {
+		var ret []ListFilesV3ResponseResultCollectionsInner
+		return ret
+	}
+	return o.Collections
+}
+
+// GetCollectionsOk returns a tuple with the Collections field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchFilesV3ResponseResult) GetCollectionsOk() ([]ListFilesV3ResponseResultCollectionsInner, bool) {
+	if o == nil || IsNil(o.Collections) {
+		return nil, false
+	}
+	return o.Collections, true
+}
+
+// HasCollections returns a boolean if a field has been set.
+func (o *SearchFilesV3ResponseResult) HasCollections() bool {
+	if o != nil && !IsNil(o.Collections) {
+		return true
+	}
+
+	return false
+}
+
+// SetCollections gets a reference to the given []ListFilesV3ResponseResultCollectionsInner and assigns it to the Collections field.
+func (o *SearchFilesV3ResponseResult) SetCollections(v []ListFilesV3ResponseResultCollectionsInner) {
+	o.Collections = v
+}
+
+// GetWorks returns the Works field value if set, zero value otherwise.
+func (o *SearchFilesV3ResponseResult) GetWorks() []ListFilesV3ResponseResultWorksInner {
+	if o == nil || IsNil(o.Works) {
+		var ret []ListFilesV3ResponseResultWorksInner
+		return ret
+	}
+	return o.Works
+}
+
+// GetWorksOk returns a tuple with the Works field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SearchFilesV3ResponseResult) GetWorksOk() ([]ListFilesV3ResponseResultWorksInner, bool) {
+	if o == nil || IsNil(o.Works) {
+		return nil, false
+	}
+	return o.Works, true
+}
+
+// HasWorks returns a boolean if a field has been set.
+func (o *SearchFilesV3ResponseResult) HasWorks() bool {
+	if o != nil && !IsNil(o.Works) {
+		return true
+	}
+
+	return false
+}
+
+// SetWorks gets a reference to the given []ListFilesV3ResponseResultWorksInner and assigns it to the Works field.
+func (o *SearchFilesV3ResponseResult) SetWorks(v []ListFilesV3ResponseResultWorksInner) {
+	o.Works = v
 }
 
 // GetNextPageToken returns the NextPageToken field value if set, zero value otherwise.
@@ -76,70 +140,6 @@ func (o *SearchFilesV3ResponseResult) SetNextPageToken(v string) {
 	o.NextPageToken = &v
 }
 
-// GetCollections returns the Collections field value if set, zero value otherwise.
-func (o *SearchFilesV3ResponseResult) GetCollections() []SearchFilesV3ResponseResultCollectionsInner {
-	if o == nil || IsNil(o.Collections) {
-		var ret []SearchFilesV3ResponseResultCollectionsInner
-		return ret
-	}
-	return o.Collections
-}
-
-// GetCollectionsOk returns a tuple with the Collections field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SearchFilesV3ResponseResult) GetCollectionsOk() ([]SearchFilesV3ResponseResultCollectionsInner, bool) {
-	if o == nil || IsNil(o.Collections) {
-		return nil, false
-	}
-	return o.Collections, true
-}
-
-// HasCollections returns a boolean if a field has been set.
-func (o *SearchFilesV3ResponseResult) HasCollections() bool {
-	if o != nil && !IsNil(o.Collections) {
-		return true
-	}
-
-	return false
-}
-
-// SetCollections gets a reference to the given []SearchFilesV3ResponseResultCollectionsInner and assigns it to the Collections field.
-func (o *SearchFilesV3ResponseResult) SetCollections(v []SearchFilesV3ResponseResultCollectionsInner) {
-	o.Collections = v
-}
-
-// GetWorks returns the Works field value if set, zero value otherwise.
-func (o *SearchFilesV3ResponseResult) GetWorks() []CreateFileV3ResponseResultInner {
-	if o == nil || IsNil(o.Works) {
-		var ret []CreateFileV3ResponseResultInner
-		return ret
-	}
-	return o.Works
-}
-
-// GetWorksOk returns a tuple with the Works field value if set, nil otherwise
-// and a boolean to check if the value has been set.
-func (o *SearchFilesV3ResponseResult) GetWorksOk() ([]CreateFileV3ResponseResultInner, bool) {
-	if o == nil || IsNil(o.Works) {
-		return nil, false
-	}
-	return o.Works, true
-}
-
-// HasWorks returns a boolean if a field has been set.
-func (o *SearchFilesV3ResponseResult) HasWorks() bool {
-	if o != nil && !IsNil(o.Works) {
-		return true
-	}
-
-	return false
-}
-
-// SetWorks gets a reference to the given []CreateFileV3ResponseResultInner and assigns it to the Works field.
-func (o *SearchFilesV3ResponseResult) SetWorks(v []CreateFileV3ResponseResultInner) {
-	o.Works = v
-}
-
 func (o SearchFilesV3ResponseResult) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -150,14 +150,14 @@ func (o SearchFilesV3ResponseResult) MarshalJSON() ([]byte, error) {
 
 func (o SearchFilesV3ResponseResult) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if !IsNil(o.NextPageToken) {
-		toSerialize["nextPageToken"] = o.NextPageToken
-	}
 	if !IsNil(o.Collections) {
 		toSerialize["collections"] = o.Collections
 	}
 	if !IsNil(o.Works) {
 		toSerialize["works"] = o.Works
+	}
+	if !IsNil(o.NextPageToken) {
+		toSerialize["nextPageToken"] = o.NextPageToken
 	}
 	return toSerialize, nil
 }

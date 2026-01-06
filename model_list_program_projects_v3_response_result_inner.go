@@ -32,7 +32,7 @@ type ListProgramProjectsV3ResponseResultInner struct {
 	OrganizationId *string `json:"organizationId,omitempty"`
 	// 可见性，project | organization
 	Visibility *string `json:"visibility,omitempty"`
-	// 是模版项目
+	// 是模板项目
 	IsTemplate *bool `json:"isTemplate,omitempty"`
 	// 创建人ID
 	CreatorId *string `json:"creatorId,omitempty"`
@@ -50,6 +50,7 @@ type ListProgramProjectsV3ResponseResultInner struct {
 	StartDate *time.Time `json:"startDate,omitempty"`
 	// 项目结束时间
 	EndDate *time.Time `json:"endDate,omitempty"`
+	// Deprecated
 	Program *ListProgramProjectsV3ResponseResultInnerProgram `json:"program,omitempty"`
 	Creator *ListProgramProjectsV3ResponseResultInnerCreator `json:"creator,omitempty"`
 	// 自定义字段值集合
@@ -554,6 +555,7 @@ func (o *ListProgramProjectsV3ResponseResultInner) SetEndDate(v time.Time) {
 }
 
 // GetProgram returns the Program field value if set, zero value otherwise.
+// Deprecated
 func (o *ListProgramProjectsV3ResponseResultInner) GetProgram() ListProgramProjectsV3ResponseResultInnerProgram {
 	if o == nil || IsNil(o.Program) {
 		var ret ListProgramProjectsV3ResponseResultInnerProgram
@@ -564,6 +566,7 @@ func (o *ListProgramProjectsV3ResponseResultInner) GetProgram() ListProgramProje
 
 // GetProgramOk returns a tuple with the Program field value if set, nil otherwise
 // and a boolean to check if the value has been set.
+// Deprecated
 func (o *ListProgramProjectsV3ResponseResultInner) GetProgramOk() (*ListProgramProjectsV3ResponseResultInnerProgram, bool) {
 	if o == nil || IsNil(o.Program) {
 		return nil, false
@@ -581,6 +584,7 @@ func (o *ListProgramProjectsV3ResponseResultInner) HasProgram() bool {
 }
 
 // SetProgram gets a reference to the given ListProgramProjectsV3ResponseResultInnerProgram and assigns it to the Program field.
+// Deprecated
 func (o *ListProgramProjectsV3ResponseResultInner) SetProgram(v ListProgramProjectsV3ResponseResultInnerProgram) {
 	o.Program = &v
 }

@@ -63,6 +63,8 @@ type APIClient struct {
 
 	DingtalkAPI *DingtalkAPIService
 
+	FavoritesAPI *FavoritesAPIService
+
 	FileAPI *FileAPIService
 
 	FormAPI *FormAPIService
@@ -123,6 +125,7 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.CustomfieldAPI = (*CustomfieldAPIService)(&c.common)
 	c.DingGroupAPI = (*DingGroupAPIService)(&c.common)
 	c.DingtalkAPI = (*DingtalkAPIService)(&c.common)
+	c.FavoritesAPI = (*FavoritesAPIService)(&c.common)
 	c.FileAPI = (*FileAPIService)(&c.common)
 	c.FormAPI = (*FormAPIService)(&c.common)
 	c.GanttAPI = (*GanttAPIService)(&c.common)

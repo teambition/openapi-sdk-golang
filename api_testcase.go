@@ -885,6 +885,7 @@ type ApiQueryTestCasesV3Request struct {
 	pageSize *int32
 	pageToken *string
 	keyword *string
+	testcaseIds *string
 }
 
 // 企业 ID
@@ -920,6 +921,12 @@ func (r ApiQueryTestCasesV3Request) PageToken(pageToken string) ApiQueryTestCase
 // 关键词
 func (r ApiQueryTestCasesV3Request) Keyword(keyword string) ApiQueryTestCasesV3Request {
 	r.keyword = &keyword
+	return r
+}
+
+// 测试用例 ID 列表，以逗号分隔，最多传100个ID，根据pageSize决定获取的数量
+func (r ApiQueryTestCasesV3Request) TestcaseIds(testcaseIds string) ApiQueryTestCasesV3Request {
+	r.testcaseIds = &testcaseIds
 	return r
 }
 
@@ -982,6 +989,9 @@ func (a *TestcaseAPIService) QueryTestCasesV3Execute(r ApiQueryTestCasesV3Reques
 	}
 	if r.keyword != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "keyword", r.keyword, "")
+	}
+	if r.testcaseIds != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "testcaseIds", r.testcaseIds, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

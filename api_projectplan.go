@@ -291,19 +291,272 @@ func (a *ProjectplanAPIService) CreateProjectPlanStatusSettingV3Execute(r ApiCre
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiDeleteV3ProjectplanScenariofieldDeleteRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	scenariofieldId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiDeleteV3ProjectplanScenariofieldDeleteRequest) XOperatorId(xOperatorId string) ApiDeleteV3ProjectplanScenariofieldDeleteRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiDeleteV3ProjectplanScenariofieldDeleteRequest) XTenantId(xTenantId string) ApiDeleteV3ProjectplanScenariofieldDeleteRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiDeleteV3ProjectplanScenariofieldDeleteRequest) Execute() (*DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse, *http.Response, error) {
+	return r.ApiService.DeleteV3ProjectplanScenariofieldDeleteExecute(r)
+}
+
+/*
+DeleteV3ProjectplanScenariofieldDelete 删除计划字段配置
+
+删除计划字段配置
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @param scenariofieldId 该字段值在计划中的场景字段id
+ @return ApiDeleteV3ProjectplanScenariofieldDeleteRequest
+
+  @link https://open.teambition.com/docs/apis/68c2280892244c2db312d350 document
+*/
+func (a *ProjectplanAPIService) DeleteV3ProjectplanScenariofieldDelete(ctx context.Context, projectPlanId string, scenariofieldId string) ApiDeleteV3ProjectplanScenariofieldDeleteRequest {
+	return ApiDeleteV3ProjectplanScenariofieldDeleteRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		scenariofieldId: scenariofieldId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse
+func (a *ProjectplanAPIService) DeleteV3ProjectplanScenariofieldDeleteExecute(r ApiDeleteV3ProjectplanScenariofieldDeleteRequest) (*DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofield/{scenariofieldId}/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"scenariofieldId"+"}", url.PathEscape(parameterValueToString(r.scenariofieldId, "scenariofieldId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	scenariofieldId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest) XOperatorId(xOperatorId string) ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest) XTenantId(xTenantId string) ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest) Execute() (*DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse, *http.Response, error) {
+	return r.ApiService.DeleteV3ProjectplanScenariofieldsDeletescenariofieldsExecute(r)
+}
+
+/*
+DeleteV3ProjectplanScenariofieldsDeletescenariofields 删除计划字段配置
+
+删除计划字段配置
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @param scenariofieldId 该字段值在计划中的场景字段id
+ @return ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest
+
+  @link https://open.teambition.com/docs/apis/68be840192244c2db391a717 document
+*/
+func (a *ProjectplanAPIService) DeleteV3ProjectplanScenariofieldsDeletescenariofields(ctx context.Context, projectPlanId string, scenariofieldId string) ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest {
+	return ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		scenariofieldId: scenariofieldId,
+	}
+}
+
+// Execute executes the request
+//  @return DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse
+func (a *ProjectplanAPIService) DeleteV3ProjectplanScenariofieldsDeletescenariofieldsExecute(r ApiDeleteV3ProjectplanScenariofieldsDeletescenariofieldsRequest) (*DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodDelete
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *DeleteV3ProjectplanScenariofieldsDeletescenariofieldsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofields/{scenariofieldId}/deleteScenariofields"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"scenariofieldId"+"}", url.PathEscape(parameterValueToString(r.scenariofieldId, "scenariofieldId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiExecutePlanEventV3Request struct {
 	ctx context.Context
 	ApiService *ProjectplanAPIService
 	projectPlanId string
 	event string
-	xTenantId *string
 	xOperatorId *string
-}
-
-// 租户 ID
-func (r ApiExecutePlanEventV3Request) XTenantId(xTenantId string) ApiExecutePlanEventV3Request {
-	r.xTenantId = &xTenantId
-	return r
+	xTenantId *string
+	executePlanEventV3Request *ExecutePlanEventV3Request
 }
 
 // 操作者ID
@@ -312,18 +565,30 @@ func (r ApiExecutePlanEventV3Request) XOperatorId(xOperatorId string) ApiExecute
 	return r
 }
 
+// 企业 ID
+func (r ApiExecutePlanEventV3Request) XTenantId(xTenantId string) ApiExecutePlanEventV3Request {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiExecutePlanEventV3Request) ExecutePlanEventV3Request(executePlanEventV3Request ExecutePlanEventV3Request) ApiExecutePlanEventV3Request {
+	r.executePlanEventV3Request = &executePlanEventV3Request
+	return r
+}
+
 func (r ApiExecutePlanEventV3Request) Execute() (*ExecutePlanEventV3Response, *http.Response, error) {
 	return r.ApiService.ExecutePlanEventV3Execute(r)
 }
 
 /*
-ExecutePlanEventV3 更改计划状态
+ExecutePlanEventV3 更改计划状态(发布/变更/取消变更)
 
-更改计划状态
+更改计划状态(发布/变更/取消变更)
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param projectPlanId 计划ID
- @param event 计划执行操作,可传入自定义操作或默认计划操作，默认enum['change', 'publish']
+ @param event 计划执行操作,可传入自定义操作或默认计划操作，默认enum['change', 'publish','cancel'],分别对应变更/发布/取消变更
  @return ApiExecutePlanEventV3Request
 
   @link https://open.teambition.com/docs/apis/67f36bbb8657139bff2bd260 document
@@ -361,7 +626,7 @@ func (a *ProjectplanAPIService) ExecutePlanEventV3Execute(r ApiExecutePlanEventV
 	localVarFormParams := url.Values{}
 
 	// to determine the Content-Type header
-	localVarHTTPContentTypes := []string{}
+	localVarHTTPContentTypes := []string{"application/json"}
 
 	// set Content-Type header
 	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
@@ -377,12 +642,14 @@ func (a *ProjectplanAPIService) ExecutePlanEventV3Execute(r ApiExecutePlanEventV
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
 	if r.xTenantId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
 	}
-	if r.xOperatorId != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Operator-Id", r.xOperatorId, "")
-	}
+	// body params
+	localVarPostBody = r.executePlanEventV3Request
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err
@@ -549,19 +816,19 @@ type ApiGetPlanV3Request struct {
 	ctx context.Context
 	ApiService *ProjectplanAPIService
 	projectPlanId string
-	xTenantId *string
 	xOperatorId *string
-}
-
-// 租户 ID
-func (r ApiGetPlanV3Request) XTenantId(xTenantId string) ApiGetPlanV3Request {
-	r.xTenantId = &xTenantId
-	return r
+	xTenantId *string
 }
 
 // 操作者ID
 func (r ApiGetPlanV3Request) XOperatorId(xOperatorId string) ApiGetPlanV3Request {
 	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetPlanV3Request) XTenantId(xTenantId string) ApiGetPlanV3Request {
+	r.xTenantId = &xTenantId
 	return r
 }
 
@@ -627,11 +894,11 @@ func (a *ProjectplanAPIService) GetPlanV3Execute(r ApiGetPlanV3Request) (*GetPla
 	if localVarHTTPHeaderAccept != "" {
 		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
 	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
 	if r.xTenantId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
-	}
-	if r.xOperatorId != nil {
-		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Operator-Id", r.xOperatorId, "")
 	}
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
@@ -735,6 +1002,1234 @@ func (a *ProjectplanAPIService) GetProjectPlanStatusSettingV3Execute(r ApiGetPro
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanListscenariofieldsRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	customfieldId *string
+	pageSize *int32
+	pageToken *string
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanListscenariofieldsRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanListscenariofieldsRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanListscenariofieldsRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanListscenariofieldsRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 自定义字段id
+func (r ApiGetV3ProjectplanListscenariofieldsRequest) CustomfieldId(customfieldId string) ApiGetV3ProjectplanListscenariofieldsRequest {
+	r.customfieldId = &customfieldId
+	return r
+}
+
+// 分页大小
+func (r ApiGetV3ProjectplanListscenariofieldsRequest) PageSize(pageSize int32) ApiGetV3ProjectplanListscenariofieldsRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 分页Token
+func (r ApiGetV3ProjectplanListscenariofieldsRequest) PageToken(pageToken string) ApiGetV3ProjectplanListscenariofieldsRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+func (r ApiGetV3ProjectplanListscenariofieldsRequest) Execute() (*GetV3ProjectplanListscenariofieldsResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanListscenariofieldsExecute(r)
+}
+
+/*
+GetV3ProjectplanListscenariofields 查询计划自定义字段
+
+查询计划自定义字段
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @return ApiGetV3ProjectplanListscenariofieldsRequest
+
+  @link https://open.teambition.com/docs/apis/68be727692244c2db30fb2ab document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanListscenariofields(ctx context.Context, projectPlanId string) ApiGetV3ProjectplanListscenariofieldsRequest {
+	return ApiGetV3ProjectplanListscenariofieldsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanListscenariofieldsResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanListscenariofieldsExecute(r ApiGetV3ProjectplanListscenariofieldsRequest) (*GetV3ProjectplanListscenariofieldsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanListscenariofieldsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/listScenariofields"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.customfieldId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customfieldId", r.customfieldId, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanListscenariofieldvaluesRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	scenariofieldId *string
+	labels *string
+	pageSize *int32
+	pageToken *string
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 该字段值在计划中的场景字段id
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) ScenariofieldId(scenariofieldId string) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	r.scenariofieldId = &scenariofieldId
+	return r
+}
+
+// 按标签查询, 逗号分隔
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) Labels(labels string) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	r.labels = &labels
+	return r
+}
+
+// 分页大小
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) PageSize(pageSize int32) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 分页Token
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) PageToken(pageToken string) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+func (r ApiGetV3ProjectplanListscenariofieldvaluesRequest) Execute() (*GetV3ProjectplanListscenariofieldvaluesResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanListscenariofieldvaluesExecute(r)
+}
+
+/*
+GetV3ProjectplanListscenariofieldvalues 获取字段值
+
+获取字段值
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @return ApiGetV3ProjectplanListscenariofieldvaluesRequest
+
+  @link https://open.teambition.com/docs/apis/68be729392244c2db3108604 document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanListscenariofieldvalues(ctx context.Context, projectPlanId string) ApiGetV3ProjectplanListscenariofieldvaluesRequest {
+	return ApiGetV3ProjectplanListscenariofieldvaluesRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanListscenariofieldvaluesResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanListscenariofieldvaluesExecute(r ApiGetV3ProjectplanListscenariofieldvaluesRequest) (*GetV3ProjectplanListscenariofieldvaluesResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanListscenariofieldvaluesResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/listScenariofieldValues"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.scenariofieldId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scenariofieldId", r.scenariofieldId, "")
+	}
+	if r.labels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "labels", r.labels, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanOperableAccessPolicyListRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xTenantId *string
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanOperableAccessPolicyListRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanOperableAccessPolicyListRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiGetV3ProjectplanOperableAccessPolicyListRequest) Execute() (*GetV3ProjectplanOperableAccessPolicyListResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanOperableAccessPolicyListExecute(r)
+}
+
+/*
+GetV3ProjectplanOperableAccessPolicyList 获取当前计划可设置加锁/解锁的动作
+
+获取当前计划可设置加锁/解锁的动作
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @return ApiGetV3ProjectplanOperableAccessPolicyListRequest
+
+  @link https://open.teambition.com/docs/apis/68c8d1bb92244c2db3644e90 document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanOperableAccessPolicyList(ctx context.Context, projectPlanId string) ApiGetV3ProjectplanOperableAccessPolicyListRequest {
+	return ApiGetV3ProjectplanOperableAccessPolicyListRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanOperableAccessPolicyListResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanOperableAccessPolicyListExecute(r ApiGetV3ProjectplanOperableAccessPolicyListRequest) (*GetV3ProjectplanOperableAccessPolicyListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanOperableAccessPolicyListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/operable-access-policy/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanPlansListRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectId string
+	xOperatorId *string
+	xTenantId *string
+	ids *string
+	pageToken *string
+	pageSize *string
+	queryAllLevels *bool
+	parentId *string
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanPlansListRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanPlansListRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanPlansListRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanPlansListRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 计划ids集合,使用逗号分隔
+func (r ApiGetV3ProjectplanPlansListRequest) Ids(ids string) ApiGetV3ProjectplanPlansListRequest {
+	r.ids = &ids
+	return r
+}
+
+// 分页标
+func (r ApiGetV3ProjectplanPlansListRequest) PageToken(pageToken string) ApiGetV3ProjectplanPlansListRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+// 每页长度
+func (r ApiGetV3ProjectplanPlansListRequest) PageSize(pageSize string) ApiGetV3ProjectplanPlansListRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 是否返回所有层级的计划
+func (r ApiGetV3ProjectplanPlansListRequest) QueryAllLevels(queryAllLevels bool) ApiGetV3ProjectplanPlansListRequest {
+	r.queryAllLevels = &queryAllLevels
+	return r
+}
+
+// 父计划ID
+func (r ApiGetV3ProjectplanPlansListRequest) ParentId(parentId string) ApiGetV3ProjectplanPlansListRequest {
+	r.parentId = &parentId
+	return r
+}
+
+func (r ApiGetV3ProjectplanPlansListRequest) Execute() (*ListVisiblePlansV3Response, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanPlansListExecute(r)
+}
+
+/*
+GetV3ProjectplanPlansList 查询用户可见的计划列表
+
+查询用户可见的计划列表
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId 项目ID
+ @return ApiGetV3ProjectplanPlansListRequest
+
+  @link https://open.teambition.com/docs/apis/68c26bcc92244c2db3fba872 document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanPlansList(ctx context.Context, projectId string) ApiGetV3ProjectplanPlansListRequest {
+	return ApiGetV3ProjectplanPlansListRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+//  @return ListVisiblePlansV3Response
+func (a *ProjectplanAPIService) GetV3ProjectplanPlansListExecute(r ApiGetV3ProjectplanPlansListRequest) (*ListVisiblePlansV3Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ListVisiblePlansV3Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/plans/{projectId}/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.ids != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ids", r.ids, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.queryAllLevels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "queryAllLevels", r.queryAllLevels, "")
+	}
+	if r.parentId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "parentId", r.parentId, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanScenariofieldListRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	customfieldId *string
+	pageSize *int32
+	pageToken *string
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanScenariofieldListRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanScenariofieldListRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanScenariofieldListRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanScenariofieldListRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 自定义字段id
+func (r ApiGetV3ProjectplanScenariofieldListRequest) CustomfieldId(customfieldId string) ApiGetV3ProjectplanScenariofieldListRequest {
+	r.customfieldId = &customfieldId
+	return r
+}
+
+// 分页大小
+func (r ApiGetV3ProjectplanScenariofieldListRequest) PageSize(pageSize int32) ApiGetV3ProjectplanScenariofieldListRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 分页Token
+func (r ApiGetV3ProjectplanScenariofieldListRequest) PageToken(pageToken string) ApiGetV3ProjectplanScenariofieldListRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+func (r ApiGetV3ProjectplanScenariofieldListRequest) Execute() (*GetV3ProjectplanListscenariofieldsResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanScenariofieldListExecute(r)
+}
+
+/*
+GetV3ProjectplanScenariofieldList 查询计划自定义字段
+
+查询计划自定义字段
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @return ApiGetV3ProjectplanScenariofieldListRequest
+
+  @link https://open.teambition.com/docs/apis/68c2287392244c2db315f81a document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanScenariofieldList(ctx context.Context, projectPlanId string) ApiGetV3ProjectplanScenariofieldListRequest {
+	return ApiGetV3ProjectplanScenariofieldListRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanListscenariofieldsResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanScenariofieldListExecute(r ApiGetV3ProjectplanScenariofieldListRequest) (*GetV3ProjectplanListscenariofieldsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanListscenariofieldsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofield/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.customfieldId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "customfieldId", r.customfieldId, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanScenariofieldValueListRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	scenariofieldId *string
+	labels *string
+	pageSize *int32
+	pageToken *string
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 该字段值在计划中的场景字段id
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) ScenariofieldId(scenariofieldId string) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	r.scenariofieldId = &scenariofieldId
+	return r
+}
+
+// 按标签查询, 逗号分隔
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) Labels(labels string) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	r.labels = &labels
+	return r
+}
+
+// 分页大小
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) PageSize(pageSize int32) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 分页Token
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) PageToken(pageToken string) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+func (r ApiGetV3ProjectplanScenariofieldValueListRequest) Execute() (*GetV3ProjectplanScenariofieldValueListResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanScenariofieldValueListExecute(r)
+}
+
+/*
+GetV3ProjectplanScenariofieldValueList 获取字段值
+
+获取字段值
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @return ApiGetV3ProjectplanScenariofieldValueListRequest
+
+  @link https://open.teambition.com/docs/apis/68c2281892244c2db3134763 document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanScenariofieldValueList(ctx context.Context, projectPlanId string) ApiGetV3ProjectplanScenariofieldValueListRequest {
+	return ApiGetV3ProjectplanScenariofieldValueListRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanScenariofieldValueListResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanScenariofieldValueListExecute(r ApiGetV3ProjectplanScenariofieldValueListRequest) (*GetV3ProjectplanScenariofieldValueListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanScenariofieldValueListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofield/value/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.scenariofieldId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "scenariofieldId", r.scenariofieldId, "")
+	}
+	if r.labels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "labels", r.labels, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest) Execute() (*GetV3ProjectplanTaskOperableAccessPolicyListResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanTaskOperableAccessPolicyListExecute(r)
+}
+
+/*
+GetV3ProjectplanTaskOperableAccessPolicyList 获取当前计划任务可设置加锁/解锁的动作
+
+获取当前任计划务可设置加锁/解锁的动作
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @param taskId 任务ID
+ @return ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest
+
+  @link https://open.teambition.com/docs/apis/68c8cfba92244c2db3558f77 document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanTaskOperableAccessPolicyList(ctx context.Context, projectPlanId string, taskId string) ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest {
+	return ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanTaskOperableAccessPolicyListResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanTaskOperableAccessPolicyListExecute(r ApiGetV3ProjectplanTaskOperableAccessPolicyListRequest) (*GetV3ProjectplanTaskOperableAccessPolicyListResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanTaskOperableAccessPolicyListResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/task/{taskId}/operable-access-policy/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+	pageToken *string
+	pageSize *float32
+	hasSubtask *bool
+	queryAllLevels *bool
+}
+
+// 操作者ID
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) XOperatorId(xOperatorId string) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) XTenantId(xTenantId string) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 分页标
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) PageToken(pageToken string) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+// 每页长度
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) PageSize(pageSize float32) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 返回是否包含子任务
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) HasSubtask(hasSubtask bool) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	r.hasSubtask = &hasSubtask
+	return r
+}
+
+// 是否返回所有子任务，默认返回一级子任务
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) QueryAllLevels(queryAllLevels bool) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	r.queryAllLevels = &queryAllLevels
+	return r
+}
+
+func (r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) Execute() (*GetV3ProjectplanTaskPlansTasksSubtasksResponse, *http.Response, error) {
+	return r.ApiService.GetV3ProjectplanTaskPlansTasksSubtasksExecute(r)
+}
+
+/*
+GetV3ProjectplanTaskPlansTasksSubtasks 获取计划任务的子任务
+
+获取计划任务的子任务
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @param taskId 任务ID
+ @return ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest
+
+  @link https://open.teambition.com/docs/apis/68ba4c2292244c2db3c17acf document
+*/
+func (a *ProjectplanAPIService) GetV3ProjectplanTaskPlansTasksSubtasks(ctx context.Context, projectPlanId string, taskId string) ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest {
+	return ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3ProjectplanTaskPlansTasksSubtasksResponse
+func (a *ProjectplanAPIService) GetV3ProjectplanTaskPlansTasksSubtasksExecute(r ApiGetV3ProjectplanTaskPlansTasksSubtasksRequest) (*GetV3ProjectplanTaskPlansTasksSubtasksResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3ProjectplanTaskPlansTasksSubtasksResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan-task/plans/{projectPlanId}/tasks/{taskId}/subtasks"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.hasSubtask != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "hasSubtask", r.hasSubtask, "")
+	}
+	if r.queryAllLevels != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "queryAllLevels", r.queryAllLevels, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -1438,6 +2933,1491 @@ func (a *ProjectplanAPIService) ListVisiblePlansV3Execute(r ApiListVisiblePlansV
 	if r.xTenantId != nil {
 		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
 	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanChangeRuleUpdateRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProjectplanChangeRuleUpdateRequest *PostV3ProjectplanChangeRuleUpdateRequest
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanChangeRuleUpdateRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanChangeRuleUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanChangeRuleUpdateRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanChangeRuleUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanChangeRuleUpdateRequest) PostV3ProjectplanChangeRuleUpdateRequest(postV3ProjectplanChangeRuleUpdateRequest PostV3ProjectplanChangeRuleUpdateRequest) ApiPostV3ProjectplanChangeRuleUpdateRequest {
+	r.postV3ProjectplanChangeRuleUpdateRequest = &postV3ProjectplanChangeRuleUpdateRequest
+	return r
+}
+
+func (r ApiPostV3ProjectplanChangeRuleUpdateRequest) Execute() (*CheckUserVisibleInAppResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanChangeRuleUpdateExecute(r)
+}
+
+/*
+PostV3ProjectplanChangeRuleUpdate 更新计划发布规则
+
+更新计划发布规则
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @return ApiPostV3ProjectplanChangeRuleUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/68d23a7392244c2db34a925b document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanChangeRuleUpdate(ctx context.Context, projectPlanId string) ApiPostV3ProjectplanChangeRuleUpdateRequest {
+	return ApiPostV3ProjectplanChangeRuleUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return CheckUserVisibleInAppResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanChangeRuleUpdateExecute(r ApiPostV3ProjectplanChangeRuleUpdateRequest) (*CheckUserVisibleInAppResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CheckUserVisibleInAppResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/change-rule/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProjectplanChangeRuleUpdateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanCreatescenariofieldsRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProjectplanCreatescenariofieldsRequest *PostV3ProjectplanCreatescenariofieldsRequest
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanCreatescenariofieldsRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanCreatescenariofieldsRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanCreatescenariofieldsRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanCreatescenariofieldsRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanCreatescenariofieldsRequest) PostV3ProjectplanCreatescenariofieldsRequest(postV3ProjectplanCreatescenariofieldsRequest PostV3ProjectplanCreatescenariofieldsRequest) ApiPostV3ProjectplanCreatescenariofieldsRequest {
+	r.postV3ProjectplanCreatescenariofieldsRequest = &postV3ProjectplanCreatescenariofieldsRequest
+	return r
+}
+
+func (r ApiPostV3ProjectplanCreatescenariofieldsRequest) Execute() (*PostV3ProjectplanCreatescenariofieldsResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanCreatescenariofieldsExecute(r)
+}
+
+/*
+PostV3ProjectplanCreatescenariofields 关联计划自定义字段
+
+关联计划自定义字段
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @return ApiPostV3ProjectplanCreatescenariofieldsRequest
+
+  @link https://open.teambition.com/docs/apis/68be782192244c2db339b16a document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanCreatescenariofields(ctx context.Context, projectPlanId string) ApiPostV3ProjectplanCreatescenariofieldsRequest {
+	return ApiPostV3ProjectplanCreatescenariofieldsRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3ProjectplanCreatescenariofieldsResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanCreatescenariofieldsExecute(r ApiPostV3ProjectplanCreatescenariofieldsRequest) (*PostV3ProjectplanCreatescenariofieldsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3ProjectplanCreatescenariofieldsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/createScenariofields"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProjectplanCreatescenariofieldsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanProjectPlansRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProjectplanProjectPlansRequest *PostV3ProjectplanProjectPlansRequest
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanProjectPlansRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanProjectPlansRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanProjectPlansRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanProjectPlansRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanProjectPlansRequest) PostV3ProjectplanProjectPlansRequest(postV3ProjectplanProjectPlansRequest PostV3ProjectplanProjectPlansRequest) ApiPostV3ProjectplanProjectPlansRequest {
+	r.postV3ProjectplanProjectPlansRequest = &postV3ProjectplanProjectPlansRequest
+	return r
+}
+
+func (r ApiPostV3ProjectplanProjectPlansRequest) Execute() (*PostV3ProjectplanProjectPlansResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanProjectPlansExecute(r)
+}
+
+/*
+PostV3ProjectplanProjectPlans 创建计划
+
+创建计划
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectId 项目ID
+ @return ApiPostV3ProjectplanProjectPlansRequest
+
+  @link https://open.teambition.com/docs/apis/68be726f92244c2db30f7ba7 document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanProjectPlans(ctx context.Context, projectId string) ApiPostV3ProjectplanProjectPlansRequest {
+	return ApiPostV3ProjectplanProjectPlansRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectId: projectId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3ProjectplanProjectPlansResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanProjectPlansExecute(r ApiPostV3ProjectplanProjectPlansRequest) (*PostV3ProjectplanProjectPlansResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3ProjectplanProjectPlansResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/project/{projectId}/plans"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectId"+"}", url.PathEscape(parameterValueToString(r.projectId, "projectId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProjectplanProjectPlansRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanScenariofieldUpdateRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProjectplanCreatescenariofieldsRequest *PostV3ProjectplanCreatescenariofieldsRequest
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanScenariofieldUpdateRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanScenariofieldUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanScenariofieldUpdateRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanScenariofieldUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanScenariofieldUpdateRequest) PostV3ProjectplanCreatescenariofieldsRequest(postV3ProjectplanCreatescenariofieldsRequest PostV3ProjectplanCreatescenariofieldsRequest) ApiPostV3ProjectplanScenariofieldUpdateRequest {
+	r.postV3ProjectplanCreatescenariofieldsRequest = &postV3ProjectplanCreatescenariofieldsRequest
+	return r
+}
+
+func (r ApiPostV3ProjectplanScenariofieldUpdateRequest) Execute() (*PostV3ProjectplanCreatescenariofieldsResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanScenariofieldUpdateExecute(r)
+}
+
+/*
+PostV3ProjectplanScenariofieldUpdate 关联计划自定义字段
+
+关联计划自定义字段
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @return ApiPostV3ProjectplanScenariofieldUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/68c2281392244c2db3132177 document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanScenariofieldUpdate(ctx context.Context, projectPlanId string) ApiPostV3ProjectplanScenariofieldUpdateRequest {
+	return ApiPostV3ProjectplanScenariofieldUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3ProjectplanCreatescenariofieldsResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanScenariofieldUpdateExecute(r ApiPostV3ProjectplanScenariofieldUpdateRequest) (*PostV3ProjectplanCreatescenariofieldsResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3ProjectplanCreatescenariofieldsResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofield/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProjectplanCreatescenariofieldsRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+	updateTaskLockV3Request *UpdateTaskLockV3Request
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest) UpdateTaskLockV3Request(updateTaskLockV3Request UpdateTaskLockV3Request) ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest {
+	r.updateTaskLockV3Request = &updateTaskLockV3Request
+	return r
+}
+
+func (r ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest) Execute() (*CheckUserVisibleInAppResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanTaskAccessPolicyUpdateExecute(r)
+}
+
+/*
+PostV3ProjectplanTaskAccessPolicyUpdate 更新计划任务加锁/解锁动作
+
+更新计划任务加锁/解锁动作
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @param taskId 计划任务ID
+ @return ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/68c8cfb292244c2db3555244 document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskAccessPolicyUpdate(ctx context.Context, projectPlanId string, taskId string) ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest {
+	return ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return CheckUserVisibleInAppResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskAccessPolicyUpdateExecute(r ApiPostV3ProjectplanTaskAccessPolicyUpdateRequest) (*CheckUserVisibleInAppResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *CheckUserVisibleInAppResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/task/{taskId}/access-policy/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.updateTaskLockV3Request
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanTaskPlansAddexisttasksRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProjectplanTaskPlansAddexisttasksRequest *PostV3ProjectplanTaskPlansAddexisttasksRequest
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanTaskPlansAddexisttasksRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanTaskPlansAddexisttasksRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanTaskPlansAddexisttasksRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanTaskPlansAddexisttasksRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanTaskPlansAddexisttasksRequest) PostV3ProjectplanTaskPlansAddexisttasksRequest(postV3ProjectplanTaskPlansAddexisttasksRequest PostV3ProjectplanTaskPlansAddexisttasksRequest) ApiPostV3ProjectplanTaskPlansAddexisttasksRequest {
+	r.postV3ProjectplanTaskPlansAddexisttasksRequest = &postV3ProjectplanTaskPlansAddexisttasksRequest
+	return r
+}
+
+func (r ApiPostV3ProjectplanTaskPlansAddexisttasksRequest) Execute() (*PostV3ProjectplanTaskPlansAddexisttasksResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanTaskPlansAddexisttasksExecute(r)
+}
+
+/*
+PostV3ProjectplanTaskPlansAddexisttasks 将项目任务加入到计划
+
+将项目任务加入到计划
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @return ApiPostV3ProjectplanTaskPlansAddexisttasksRequest
+
+  @link https://open.teambition.com/docs/apis/68ba4c2292244c2db3c17b69 document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskPlansAddexisttasks(ctx context.Context, projectPlanId string) ApiPostV3ProjectplanTaskPlansAddexisttasksRequest {
+	return ApiPostV3ProjectplanTaskPlansAddexisttasksRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3ProjectplanTaskPlansAddexisttasksResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskPlansAddexisttasksExecute(r ApiPostV3ProjectplanTaskPlansAddexisttasksRequest) (*PostV3ProjectplanTaskPlansAddexisttasksResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3ProjectplanTaskPlansAddexisttasksResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan-task/plans/{projectPlanId}/addExistTasks"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProjectplanTaskPlansAddexisttasksRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanTaskPlansTasksRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	xOperatorId *string
+	xTenantId *string
+	postV3ProjectplanTaskPlansTasksRequest *PostV3ProjectplanTaskPlansTasksRequest
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanTaskPlansTasksRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanTaskPlansTasksRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanTaskPlansTasksRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanTaskPlansTasksRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3ProjectplanTaskPlansTasksRequest) PostV3ProjectplanTaskPlansTasksRequest(postV3ProjectplanTaskPlansTasksRequest PostV3ProjectplanTaskPlansTasksRequest) ApiPostV3ProjectplanTaskPlansTasksRequest {
+	r.postV3ProjectplanTaskPlansTasksRequest = &postV3ProjectplanTaskPlansTasksRequest
+	return r
+}
+
+func (r ApiPostV3ProjectplanTaskPlansTasksRequest) Execute() (*PostV3ProjectplanTaskPlansTasksResponse, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanTaskPlansTasksExecute(r)
+}
+
+/*
+PostV3ProjectplanTaskPlansTasks 创建计划任务
+
+创建计划任务
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @return ApiPostV3ProjectplanTaskPlansTasksRequest
+
+  @link https://open.teambition.com/docs/apis/68ba4c2392244c2db3c17e08 document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskPlansTasks(ctx context.Context, projectPlanId string) ApiPostV3ProjectplanTaskPlansTasksRequest {
+	return ApiPostV3ProjectplanTaskPlansTasksRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3ProjectplanTaskPlansTasksResponse
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskPlansTasksExecute(r ApiPostV3ProjectplanTaskPlansTasksRequest) (*PostV3ProjectplanTaskPlansTasksResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3ProjectplanTaskPlansTasksResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan-task/plans/{projectPlanId}/tasks"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3ProjectplanTaskPlansTasksRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3ProjectplanTaskPlansTasksArchiveRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiPostV3ProjectplanTaskPlansTasksArchiveRequest) XOperatorId(xOperatorId string) ApiPostV3ProjectplanTaskPlansTasksArchiveRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3ProjectplanTaskPlansTasksArchiveRequest) XTenantId(xTenantId string) ApiPostV3ProjectplanTaskPlansTasksArchiveRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiPostV3ProjectplanTaskPlansTasksArchiveRequest) Execute() (*ArchiveTaskV3Response, *http.Response, error) {
+	return r.ApiService.PostV3ProjectplanTaskPlansTasksArchiveExecute(r)
+}
+
+/*
+PostV3ProjectplanTaskPlansTasksArchive 删除计划任务
+
+删除计划任务
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @param taskId 任务ID
+ @return ApiPostV3ProjectplanTaskPlansTasksArchiveRequest
+
+  @link https://open.teambition.com/docs/apis/68ba4c2392244c2db3c17f56 document
+*/
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskPlansTasksArchive(ctx context.Context, projectPlanId string, taskId string) ApiPostV3ProjectplanTaskPlansTasksArchiveRequest {
+	return ApiPostV3ProjectplanTaskPlansTasksArchiveRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return ArchiveTaskV3Response
+func (a *ProjectplanAPIService) PostV3ProjectplanTaskPlansTasksArchiveExecute(r ApiPostV3ProjectplanTaskPlansTasksArchiveRequest) (*ArchiveTaskV3Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ArchiveTaskV3Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan-task/plans/{projectPlanId}/tasks/{taskId}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutV3ProjectplanScenariofieldValueUpdateRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	scenariofieldId string
+	xOperatorId *string
+	xTenantId *string
+	putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest *PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+}
+
+// 操作者ID
+func (r ApiPutV3ProjectplanScenariofieldValueUpdateRequest) XOperatorId(xOperatorId string) ApiPutV3ProjectplanScenariofieldValueUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPutV3ProjectplanScenariofieldValueUpdateRequest) XTenantId(xTenantId string) ApiPutV3ProjectplanScenariofieldValueUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPutV3ProjectplanScenariofieldValueUpdateRequest) PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest(putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) ApiPutV3ProjectplanScenariofieldValueUpdateRequest {
+	r.putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest = &putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+	return r
+}
+
+func (r ApiPutV3ProjectplanScenariofieldValueUpdateRequest) Execute() (*PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse, *http.Response, error) {
+	return r.ApiService.PutV3ProjectplanScenariofieldValueUpdateExecute(r)
+}
+
+/*
+PutV3ProjectplanScenariofieldValueUpdate 更新字段值
+
+更新字段值
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @param scenariofieldId 该字段值在计划中的场景字段id
+ @return ApiPutV3ProjectplanScenariofieldValueUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/68c2282492244c2db313aa44 document
+*/
+func (a *ProjectplanAPIService) PutV3ProjectplanScenariofieldValueUpdate(ctx context.Context, projectPlanId string, scenariofieldId string) ApiPutV3ProjectplanScenariofieldValueUpdateRequest {
+	return ApiPutV3ProjectplanScenariofieldValueUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		scenariofieldId: scenariofieldId,
+	}
+}
+
+// Execute executes the request
+//  @return PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse
+func (a *ProjectplanAPIService) PutV3ProjectplanScenariofieldValueUpdateExecute(r ApiPutV3ProjectplanScenariofieldValueUpdateRequest) (*PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofield/{scenariofieldId}/value/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"scenariofieldId"+"}", url.PathEscape(parameterValueToString(r.scenariofieldId, "scenariofieldId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	scenariofieldId string
+	xOperatorId *string
+	xTenantId *string
+	putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest *PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+}
+
+// 操作者ID
+func (r ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) XOperatorId(xOperatorId string) ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) XTenantId(xTenantId string) ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest(putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest {
+	r.putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest = &putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+	return r
+}
+
+func (r ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) Execute() (*PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse, *http.Response, error) {
+	return r.ApiService.PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueExecute(r)
+}
+
+/*
+PutV3ProjectplanScenariofieldsUpdatescenariofieldvalue 更新字段值
+
+更新字段值
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划id
+ @param scenariofieldId 该字段值在计划中的场景字段id
+ @return ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+
+  @link https://open.teambition.com/docs/apis/68be83fa92244c2db39179e8 document
+*/
+func (a *ProjectplanAPIService) PutV3ProjectplanScenariofieldsUpdatescenariofieldvalue(ctx context.Context, projectPlanId string, scenariofieldId string) ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest {
+	return ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		scenariofieldId: scenariofieldId,
+	}
+}
+
+// Execute executes the request
+//  @return PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse
+func (a *ProjectplanAPIService) PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueExecute(r ApiPutV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest) (*PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PutV3ProjectplanScenariofieldsUpdatescenariofieldvalueResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan/{projectPlanId}/scenariofields/{scenariofieldId}/updateScenariofieldValue"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"scenariofieldId"+"}", url.PathEscape(parameterValueToString(r.scenariofieldId, "scenariofieldId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.putV3ProjectplanScenariofieldsUpdatescenariofieldvalueRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest struct {
+	ctx context.Context
+	ApiService *ProjectplanAPIService
+	projectPlanId string
+	taskId string
+	xOperatorId *string
+	xTenantId *string
+	putV3ProjectplanTaskPlansTasksExecutoridRequest *PutV3ProjectplanTaskPlansTasksExecutoridRequest
+}
+
+// 操作者ID
+func (r ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest) XOperatorId(xOperatorId string) ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest) XTenantId(xTenantId string) ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest) PutV3ProjectplanTaskPlansTasksExecutoridRequest(putV3ProjectplanTaskPlansTasksExecutoridRequest PutV3ProjectplanTaskPlansTasksExecutoridRequest) ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest {
+	r.putV3ProjectplanTaskPlansTasksExecutoridRequest = &putV3ProjectplanTaskPlansTasksExecutoridRequest
+	return r
+}
+
+func (r ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest) Execute() (*UpdateTaskExecutorV3Response, *http.Response, error) {
+	return r.ApiService.PutV3ProjectplanTaskPlansTasksExecutoridExecute(r)
+}
+
+/*
+PutV3ProjectplanTaskPlansTasksExecutorid 更新计划任务执行者
+
+更新计划任务执行者
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param projectPlanId 计划ID
+ @param taskId 任务ID
+ @return ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest
+
+  @link https://open.teambition.com/docs/apis/68ba4c2392244c2db3c1800c document
+*/
+func (a *ProjectplanAPIService) PutV3ProjectplanTaskPlansTasksExecutorid(ctx context.Context, projectPlanId string, taskId string) ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest {
+	return ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest{
+		ApiService: a,
+		ctx: ctx,
+		projectPlanId: projectPlanId,
+		taskId: taskId,
+	}
+}
+
+// Execute executes the request
+//  @return UpdateTaskExecutorV3Response
+func (a *ProjectplanAPIService) PutV3ProjectplanTaskPlansTasksExecutoridExecute(r ApiPutV3ProjectplanTaskPlansTasksExecutoridRequest) (*UpdateTaskExecutorV3Response, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPut
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *UpdateTaskExecutorV3Response
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/projectplan-task/plans/{projectPlanId}/tasks/{taskId}/executorId"
+	localVarPath = strings.Replace(localVarPath, "{"+"projectPlanId"+"}", url.PathEscape(parameterValueToString(r.projectPlanId, "projectPlanId")), -1)
+	localVarPath = strings.Replace(localVarPath, "{"+"taskId"+"}", url.PathEscape(parameterValueToString(r.taskId, "taskId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.putV3ProjectplanTaskPlansTasksExecutoridRequest
 	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
 	if err != nil {
 		return localVarReturnValue, nil, err

@@ -523,7 +523,7 @@ func (r ApiCreateOrgRoleRequest) CreateOrgRoleRequest(createOrgRoleRequest Creat
 	return r
 }
 
-func (r ApiCreateOrgRoleRequest) Execute() (*CreateOrgRoleResponse, *http.Response, error) {
+func (r ApiCreateOrgRoleRequest) Execute() (*UpdateOrgMemberResponse, *http.Response, error) {
 	return r.ApiService.CreateOrgRoleExecute(r)
 }
 
@@ -547,13 +547,13 @@ func (a *ContactAPIService) CreateOrgRole(ctx context.Context, organizationId st
 }
 
 // Execute executes the request
-//  @return CreateOrgRoleResponse
-func (a *ContactAPIService) CreateOrgRoleExecute(r ApiCreateOrgRoleRequest) (*CreateOrgRoleResponse, *http.Response, error) {
+//  @return UpdateOrgMemberResponse
+func (a *ContactAPIService) CreateOrgRoleExecute(r ApiCreateOrgRoleRequest) (*UpdateOrgMemberResponse, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodPost
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  *CreateOrgRoleResponse
+		localVarReturnValue  *UpdateOrgMemberResponse
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)

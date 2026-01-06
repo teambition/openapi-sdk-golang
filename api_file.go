@@ -564,7 +564,7 @@ func (r ApiGetFileDetailV3Request) XTenantId(xTenantId string) ApiGetFileDetailV
 	return r
 }
 
-// 项目文件 ID 集合，使用逗号分隔，最多查询500个
+// 项目文件 ID 集合,使用逗号分隔
 func (r ApiGetFileDetailV3Request) WorkIds(workIds string) ApiGetFileDetailV3Request {
 	r.workIds = &workIds
 	return r
@@ -824,7 +824,7 @@ func (r ApiGetFolderDetailV3Request) XTenantId(xTenantId string) ApiGetFolderDet
 	return r
 }
 
-// 文件夹 ID 集合，使用逗号分隔，最多查询100个
+// 文件夹 ID 集合,使用逗号分隔，最多查询100个
 func (r ApiGetFolderDetailV3Request) CollectionIds(collectionIds string) ApiGetFolderDetailV3Request {
 	r.collectionIds = &collectionIds
 	return r
@@ -935,6 +935,276 @@ func (a *FileAPIService) GetFolderDetailV3Execute(r ApiGetFolderDetailV3Request)
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiGetV3WorkActivityQueryRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	workId string
+	xOperatorId *string
+	xTenantId *string
+	pageSize *string
+	pageToken *string
+}
+
+// 操作者ID
+func (r ApiGetV3WorkActivityQueryRequest) XOperatorId(xOperatorId string) ApiGetV3WorkActivityQueryRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3WorkActivityQueryRequest) XTenantId(xTenantId string) ApiGetV3WorkActivityQueryRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 分页数
+func (r ApiGetV3WorkActivityQueryRequest) PageSize(pageSize string) ApiGetV3WorkActivityQueryRequest {
+	r.pageSize = &pageSize
+	return r
+}
+
+// 分页标
+func (r ApiGetV3WorkActivityQueryRequest) PageToken(pageToken string) ApiGetV3WorkActivityQueryRequest {
+	r.pageToken = &pageToken
+	return r
+}
+
+func (r ApiGetV3WorkActivityQueryRequest) Execute() (*GetV3WorkActivityQueryResponse, *http.Response, error) {
+	return r.ApiService.GetV3WorkActivityQueryExecute(r)
+}
+
+/*
+GetV3WorkActivityQuery 获取文件动态
+
+获取文件动态
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param workId 文件 ID
+ @return ApiGetV3WorkActivityQueryRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd730f document
+*/
+func (a *FileAPIService) GetV3WorkActivityQuery(ctx context.Context, workId string) ApiGetV3WorkActivityQueryRequest {
+	return ApiGetV3WorkActivityQueryRequest{
+		ApiService: a,
+		ctx: ctx,
+		workId: workId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3WorkActivityQueryResponse
+func (a *FileAPIService) GetV3WorkActivityQueryExecute(r ApiGetV3WorkActivityQueryRequest) (*GetV3WorkActivityQueryResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3WorkActivityQueryResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/work/{workId}/activity/list"
+	localVarPath = strings.Replace(localVarPath, "{"+"workId"+"}", url.PathEscape(parameterValueToString(r.workId, "workId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	if r.pageSize != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
+	}
+	if r.pageToken != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "pageToken", r.pageToken, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiGetV3WorkVersionQueryRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	workId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiGetV3WorkVersionQueryRequest) XOperatorId(xOperatorId string) ApiGetV3WorkVersionQueryRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiGetV3WorkVersionQueryRequest) XTenantId(xTenantId string) ApiGetV3WorkVersionQueryRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiGetV3WorkVersionQueryRequest) Execute() (*GetV3WorkVersionQueryResponse, *http.Response, error) {
+	return r.ApiService.GetV3WorkVersionQueryExecute(r)
+}
+
+/*
+GetV3WorkVersionQuery 获取文件所有版本
+
+获取文件所有版本
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param workId 文件 ID
+ @return ApiGetV3WorkVersionQueryRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd75f9 document
+*/
+func (a *FileAPIService) GetV3WorkVersionQuery(ctx context.Context, workId string) ApiGetV3WorkVersionQueryRequest {
+	return ApiGetV3WorkVersionQueryRequest{
+		ApiService: a,
+		ctx: ctx,
+		workId: workId,
+	}
+}
+
+// Execute executes the request
+//  @return GetV3WorkVersionQueryResponse
+func (a *FileAPIService) GetV3WorkVersionQueryExecute(r ApiGetV3WorkVersionQueryRequest) (*GetV3WorkVersionQueryResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodGet
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *GetV3WorkVersionQueryResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/work/{workId}/version/query"
+	localVarPath = strings.Replace(localVarPath, "{"+"workId"+"}", url.PathEscape(parameterValueToString(r.workId, "workId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiListFilesV3Request struct {
 	ctx context.Context
 	ApiService *FileAPIService
@@ -942,6 +1212,7 @@ type ApiListFilesV3Request struct {
 	parentId *string
 	displayPrefixPath *bool
 	projectId *string
+	includeArchived *bool
 	pageSize *int32
 	pageToken *string
 }
@@ -970,7 +1241,13 @@ func (r ApiListFilesV3Request) ProjectId(projectId string) ApiListFilesV3Request
 	return r
 }
 
-// 每页任务数量（默认为50）
+// 是否包含回收站文件夹和文件
+func (r ApiListFilesV3Request) IncludeArchived(includeArchived bool) ApiListFilesV3Request {
+	r.includeArchived = &includeArchived
+	return r
+}
+
+// 每页数量(默认为50)
 func (r ApiListFilesV3Request) PageSize(pageSize int32) ApiListFilesV3Request {
 	r.pageSize = &pageSize
 	return r
@@ -1032,6 +1309,9 @@ func (a *FileAPIService) ListFilesV3Execute(r ApiListFilesV3Request) (*ListFiles
 	}
 	if r.projectId != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "projectId", r.projectId, "")
+	}
+	if r.includeArchived != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeArchived", r.includeArchived, "")
 	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
@@ -1364,12 +1644,800 @@ func (a *FileAPIService) MoveFolderV3Execute(r ApiMoveFolderV3Request) (*MoveFol
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
 
+type ApiPostV3CollectionArchiveRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	collectionId string
+	xOperatorId *string
+	xTenantId *string
+	postV3CollectionArchiveRequest *PostV3CollectionArchiveRequest
+}
+
+// 操作者ID
+func (r ApiPostV3CollectionArchiveRequest) XOperatorId(xOperatorId string) ApiPostV3CollectionArchiveRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3CollectionArchiveRequest) XTenantId(xTenantId string) ApiPostV3CollectionArchiveRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3CollectionArchiveRequest) PostV3CollectionArchiveRequest(postV3CollectionArchiveRequest PostV3CollectionArchiveRequest) ApiPostV3CollectionArchiveRequest {
+	r.postV3CollectionArchiveRequest = &postV3CollectionArchiveRequest
+	return r
+}
+
+func (r ApiPostV3CollectionArchiveRequest) Execute() (*PostV3CollectionArchiveResponse, *http.Response, error) {
+	return r.ApiService.PostV3CollectionArchiveExecute(r)
+}
+
+/*
+PostV3CollectionArchive 文件夹移入回收站
+
+文件夹移入回收站
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param collectionId 文件夹ID
+ @return ApiPostV3CollectionArchiveRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab4912d20d3b5bd71b3 document
+*/
+func (a *FileAPIService) PostV3CollectionArchive(ctx context.Context, collectionId string) ApiPostV3CollectionArchiveRequest {
+	return ApiPostV3CollectionArchiveRequest{
+		ApiService: a,
+		ctx: ctx,
+		collectionId: collectionId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3CollectionArchiveResponse
+func (a *FileAPIService) PostV3CollectionArchiveExecute(r ApiPostV3CollectionArchiveRequest) (*PostV3CollectionArchiveResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3CollectionArchiveResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/collection/{collectionId}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"collectionId"+"}", url.PathEscape(parameterValueToString(r.collectionId, "collectionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3CollectionArchiveRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3CollectionDeleteRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	collectionId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiPostV3CollectionDeleteRequest) XOperatorId(xOperatorId string) ApiPostV3CollectionDeleteRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3CollectionDeleteRequest) XTenantId(xTenantId string) ApiPostV3CollectionDeleteRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiPostV3CollectionDeleteRequest) Execute() (*PostV3CollectionDeleteResponse, *http.Response, error) {
+	return r.ApiService.PostV3CollectionDeleteExecute(r)
+}
+
+/*
+PostV3CollectionDelete 删除文件夹
+
+删除文件夹
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param collectionId 文件夹ID
+ @return ApiPostV3CollectionDeleteRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab4912d20d3b5bd7239 document
+*/
+func (a *FileAPIService) PostV3CollectionDelete(ctx context.Context, collectionId string) ApiPostV3CollectionDeleteRequest {
+	return ApiPostV3CollectionDeleteRequest{
+		ApiService: a,
+		ctx: ctx,
+		collectionId: collectionId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3CollectionDeleteResponse
+func (a *FileAPIService) PostV3CollectionDeleteExecute(r ApiPostV3CollectionDeleteRequest) (*PostV3CollectionDeleteResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3CollectionDeleteResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/collection/{collectionId}/delete"
+	localVarPath = strings.Replace(localVarPath, "{"+"collectionId"+"}", url.PathEscape(parameterValueToString(r.collectionId, "collectionId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3WorkArchiveRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	workId string
+	xOperatorId *string
+	xTenantId *string
+}
+
+// 操作者ID
+func (r ApiPostV3WorkArchiveRequest) XOperatorId(xOperatorId string) ApiPostV3WorkArchiveRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3WorkArchiveRequest) XTenantId(xTenantId string) ApiPostV3WorkArchiveRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+func (r ApiPostV3WorkArchiveRequest) Execute() (*PostV3WorkArchiveResponse, *http.Response, error) {
+	return r.ApiService.PostV3WorkArchiveExecute(r)
+}
+
+/*
+PostV3WorkArchive 文件移入回收站
+
+文件移入回收站
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param workId 文件ID
+ @return ApiPostV3WorkArchiveRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd737c document
+*/
+func (a *FileAPIService) PostV3WorkArchive(ctx context.Context, workId string) ApiPostV3WorkArchiveRequest {
+	return ApiPostV3WorkArchiveRequest{
+		ApiService: a,
+		ctx: ctx,
+		workId: workId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3WorkArchiveResponse
+func (a *FileAPIService) PostV3WorkArchiveExecute(r ApiPostV3WorkArchiveRequest) (*PostV3WorkArchiveResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3WorkArchiveResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/work/{workId}/archive"
+	localVarPath = strings.Replace(localVarPath, "{"+"workId"+"}", url.PathEscape(parameterValueToString(r.workId, "workId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3WorkInvolvememberUpdateRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	workId string
+	xOperatorId *string
+	xTenantId *string
+	postV3WorkInvolvememberUpdateRequest *PostV3WorkInvolvememberUpdateRequest
+}
+
+// 操作者ID
+func (r ApiPostV3WorkInvolvememberUpdateRequest) XOperatorId(xOperatorId string) ApiPostV3WorkInvolvememberUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3WorkInvolvememberUpdateRequest) XTenantId(xTenantId string) ApiPostV3WorkInvolvememberUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3WorkInvolvememberUpdateRequest) PostV3WorkInvolvememberUpdateRequest(postV3WorkInvolvememberUpdateRequest PostV3WorkInvolvememberUpdateRequest) ApiPostV3WorkInvolvememberUpdateRequest {
+	r.postV3WorkInvolvememberUpdateRequest = &postV3WorkInvolvememberUpdateRequest
+	return r
+}
+
+func (r ApiPostV3WorkInvolvememberUpdateRequest) Execute() (*PostV3WorkInvolvememberUpdateResponse, *http.Response, error) {
+	return r.ApiService.PostV3WorkInvolvememberUpdateExecute(r)
+}
+
+/*
+PostV3WorkInvolvememberUpdate 修改文件参与者
+
+修改文件参与者
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param workId 文件 ID
+ @return ApiPostV3WorkInvolvememberUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd74bf document
+*/
+func (a *FileAPIService) PostV3WorkInvolvememberUpdate(ctx context.Context, workId string) ApiPostV3WorkInvolvememberUpdateRequest {
+	return ApiPostV3WorkInvolvememberUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		workId: workId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3WorkInvolvememberUpdateResponse
+func (a *FileAPIService) PostV3WorkInvolvememberUpdateExecute(r ApiPostV3WorkInvolvememberUpdateRequest) (*PostV3WorkInvolvememberUpdateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3WorkInvolvememberUpdateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/work/{workId}/involveMember/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"workId"+"}", url.PathEscape(parameterValueToString(r.workId, "workId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3WorkInvolvememberUpdateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3WorkMainSetRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	workId string
+	xOperatorId *string
+	xTenantId *string
+	postV3WorkMainSetRequest *PostV3WorkMainSetRequest
+}
+
+// 操作者ID
+func (r ApiPostV3WorkMainSetRequest) XOperatorId(xOperatorId string) ApiPostV3WorkMainSetRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3WorkMainSetRequest) XTenantId(xTenantId string) ApiPostV3WorkMainSetRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3WorkMainSetRequest) PostV3WorkMainSetRequest(postV3WorkMainSetRequest PostV3WorkMainSetRequest) ApiPostV3WorkMainSetRequest {
+	r.postV3WorkMainSetRequest = &postV3WorkMainSetRequest
+	return r
+}
+
+func (r ApiPostV3WorkMainSetRequest) Execute() (*PostV3WorkMainSetResponse, *http.Response, error) {
+	return r.ApiService.PostV3WorkMainSetExecute(r)
+}
+
+/*
+PostV3WorkMainSet 设置文件主版本
+
+设置文件主版本
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param workId 文件ID
+ @return ApiPostV3WorkMainSetRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd751d document
+*/
+func (a *FileAPIService) PostV3WorkMainSet(ctx context.Context, workId string) ApiPostV3WorkMainSetRequest {
+	return ApiPostV3WorkMainSetRequest{
+		ApiService: a,
+		ctx: ctx,
+		workId: workId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3WorkMainSetResponse
+func (a *FileAPIService) PostV3WorkMainSetExecute(r ApiPostV3WorkMainSetRequest) (*PostV3WorkMainSetResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3WorkMainSetResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/work/{workId}/main-version/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"workId"+"}", url.PathEscape(parameterValueToString(r.workId, "workId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3WorkMainSetRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostV3WorkVisibleUpdateRequest struct {
+	ctx context.Context
+	ApiService *FileAPIService
+	workId string
+	xOperatorId *string
+	xTenantId *string
+	postV3WorkVisibleUpdateRequest *PostV3WorkVisibleUpdateRequest
+}
+
+// 操作者ID
+func (r ApiPostV3WorkVisibleUpdateRequest) XOperatorId(xOperatorId string) ApiPostV3WorkVisibleUpdateRequest {
+	r.xOperatorId = &xOperatorId
+	return r
+}
+
+// 企业 ID
+func (r ApiPostV3WorkVisibleUpdateRequest) XTenantId(xTenantId string) ApiPostV3WorkVisibleUpdateRequest {
+	r.xTenantId = &xTenantId
+	return r
+}
+
+// 
+func (r ApiPostV3WorkVisibleUpdateRequest) PostV3WorkVisibleUpdateRequest(postV3WorkVisibleUpdateRequest PostV3WorkVisibleUpdateRequest) ApiPostV3WorkVisibleUpdateRequest {
+	r.postV3WorkVisibleUpdateRequest = &postV3WorkVisibleUpdateRequest
+	return r
+}
+
+func (r ApiPostV3WorkVisibleUpdateRequest) Execute() (*PostV3WorkVisibleUpdateResponse, *http.Response, error) {
+	return r.ApiService.PostV3WorkVisibleUpdateExecute(r)
+}
+
+/*
+PostV3WorkVisibleUpdate 修改文件可见性
+
+修改文件可见性
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param workId 文件 ID
+ @return ApiPostV3WorkVisibleUpdateRequest
+
+  @link https://open.teambition.com/docs/apis/688c2ab5912d20d3b5bd7652 document
+*/
+func (a *FileAPIService) PostV3WorkVisibleUpdate(ctx context.Context, workId string) ApiPostV3WorkVisibleUpdateRequest {
+	return ApiPostV3WorkVisibleUpdateRequest{
+		ApiService: a,
+		ctx: ctx,
+		workId: workId,
+	}
+}
+
+// Execute executes the request
+//  @return PostV3WorkVisibleUpdateResponse
+func (a *FileAPIService) PostV3WorkVisibleUpdateExecute(r ApiPostV3WorkVisibleUpdateRequest) (*PostV3WorkVisibleUpdateResponse, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *PostV3WorkVisibleUpdateResponse
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx)
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/v3/work/{workId}/visible/update"
+	localVarPath = strings.Replace(localVarPath, "{"+"workId"+"}", url.PathEscape(parameterValueToString(r.workId, "workId")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	if r.xOperatorId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "x-operator-id", r.xOperatorId, "")
+	}
+	if r.xTenantId != nil {
+		parameterAddToHeaderOrQuery(localVarHeaderParams, "X-Tenant-Id", r.xTenantId, "")
+	}
+	// body params
+	localVarPostBody = r.postV3WorkVisibleUpdateRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
 type ApiSearchFilesV3Request struct {
 	ctx context.Context
 	ApiService *FileAPIService
 	xTenantId *string
-	q *string
 	projectId *string
+	q *string
+	includeArchived *bool
+	onlyWorks *bool
 	pageSize *int32
 	pageToken *string
 }
@@ -1380,19 +2448,31 @@ func (r ApiSearchFilesV3Request) XTenantId(xTenantId string) ApiSearchFilesV3Req
 	return r
 }
 
-// 文件/文件夹名(模糊搜索)
-func (r ApiSearchFilesV3Request) Q(q string) ApiSearchFilesV3Request {
-	r.q = &q
-	return r
-}
-
 // 项目ID
 func (r ApiSearchFilesV3Request) ProjectId(projectId string) ApiSearchFilesV3Request {
 	r.projectId = &projectId
 	return r
 }
 
-// 每页任务数量（默认为50）
+// 搜索词，支持文件名、文件夹名
+func (r ApiSearchFilesV3Request) Q(q string) ApiSearchFilesV3Request {
+	r.q = &q
+	return r
+}
+
+// 是否包含在回收站的文件，文件夹
+func (r ApiSearchFilesV3Request) IncludeArchived(includeArchived bool) ApiSearchFilesV3Request {
+	r.includeArchived = &includeArchived
+	return r
+}
+
+// 是否只搜索文件，不搜索文件夹，默认全部都搜索，如果只搜索文件，可以加快响应速度
+func (r ApiSearchFilesV3Request) OnlyWorks(onlyWorks bool) ApiSearchFilesV3Request {
+	r.onlyWorks = &onlyWorks
+	return r
+}
+
+// 每页任务数量(默认为50)
 func (r ApiSearchFilesV3Request) PageSize(pageSize int32) ApiSearchFilesV3Request {
 	r.pageSize = &pageSize
 	return r
@@ -1409,9 +2489,9 @@ func (r ApiSearchFilesV3Request) Execute() (*SearchFilesV3Response, *http.Respon
 }
 
 /*
-SearchFilesV3 搜索文件列表
+SearchFilesV3 深度搜索项目内的文件和文件夹
 
-搜索文件列表
+深度搜索项目内的文件和文件夹
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiSearchFilesV3Request
@@ -1446,11 +2526,17 @@ func (a *FileAPIService) SearchFilesV3Execute(r ApiSearchFilesV3Request) (*Searc
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.projectId != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "projectId", r.projectId, "")
+	}
 	if r.q != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "")
 	}
-	if r.projectId != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "projectId", r.projectId, "")
+	if r.includeArchived != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "includeArchived", r.includeArchived, "")
+	}
+	if r.onlyWorks != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "onlyWorks", r.onlyWorks, "")
 	}
 	if r.pageSize != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "pageSize", r.pageSize, "")
